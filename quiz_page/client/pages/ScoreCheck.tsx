@@ -125,7 +125,7 @@ export default function ScoreCheck() {
     return (
       <Layout>
         <div className="flex flex-col items-center justify-center h-screen gap-4">
-          <p className="text-gray-600">ไม่พบแบบทดสอบ</p>
+          <p className="text-muted-foreground">ไม่พบแบบทดสอบ</p>
           <button
             onClick={() => navigate("/check-score")}
             className="flex items-center gap-2 text-brand-red hover:text-red-700"
@@ -145,28 +145,28 @@ export default function ScoreCheck() {
         <div className="flex items-center gap-4">
           <button
             onClick={() => navigate("/check-score")}
-            className="flex items-center gap-2 text-brand-red hover:text-red-700 transition-colors p-2 hover:bg-gray-100 rounded-full"
+            className="flex items-center gap-2 text-brand-red hover:text-red-700 transition-colors p-2 hover:bg-muted rounded-full"
             title="กลับ"
           >
             <ArrowLeft className="w-6 h-6" />
           </button>
           <div>
-            <h1 className="text-3xl font-bold text-gray-900">ตรวจสอบคะแนน</h1>
-            <p className="text-gray-600 mt-1">{quiz.title}</p>
+            <h1 className="text-3xl font-bold text-foreground">ตรวจสอบคะแนน</h1>
+            <p className="text-muted-foreground mt-1">{quiz.title}</p>
           </div>
         </div>
 
         {/* File Upload Section */}
-        <div className="bg-white border border-gray-200 rounded-2xl p-6">
-          <h2 className="text-lg font-semibold text-gray-900 mb-4">
+        <div className="bg-card border border-border rounded-2xl p-6">
+          <h2 className="text-lg font-semibold text-foreground mb-4">
             อัปโหลดภาพถ่ายกระดาษคำตอบ
           </h2>
           <div className="flex items-center gap-4">
             <label className="flex items-center justify-center w-full">
-              <div className="flex flex-col items-center justify-center border-2 border-dashed border-gray-300 rounded-lg p-6 cursor-pointer hover:border-brand-red transition-colors w-full">
-                <Upload className="w-8 h-8 text-gray-400 mb-2" />
-                <p className="text-sm font-medium text-gray-900">เลือกหรือลากไฟล์มาที่นี่</p>
-                <p className="text-xs text-gray-500 mt-1">PNG, JPG, PDF</p>
+              <div className="flex flex-col items-center justify-center border-2 border-dashed border-border rounded-lg p-6 cursor-pointer hover:border-brand-red transition-colors w-full">
+                <Upload className="w-8 h-8 text-muted-foreground mb-2" />
+                <p className="text-sm font-medium text-foreground">เลือกหรือลากไฟล์มาที่นี่</p>
+                <p className="text-xs text-muted-foreground mt-1">PNG, JPG, PDF</p>
               </div>
               <input
                 type="file"
@@ -186,8 +186,8 @@ export default function ScoreCheck() {
         </div>
 
         {/* Students Table */}
-        <div className="bg-white border border-gray-200 rounded-2xl p-6">
-          <h2 className="text-lg font-semibold text-gray-900 mb-4">
+        <div className="bg-card border border-border rounded-2xl p-6">
+          <h2 className="text-lg font-semibold text-foreground mb-4">
             รายชื่อนักเรียน ({students.length})
           </h2>
 
@@ -195,24 +195,24 @@ export default function ScoreCheck() {
             <div className="overflow-x-auto">
               <table className="w-full">
                 <thead>
-                  <tr className="bg-gray-50 border-b border-gray-200">
-                    <th className="px-4 py-3 text-left text-sm font-semibold text-gray-900 w-32">ชื่อนักเรียน</th>
-                    <th className="px-4 py-3 text-left text-sm font-semibold text-gray-900 w-28">สาขาวิชา</th>
-                    <th className="px-4 py-3 text-left text-sm font-semibold text-gray-900 w-24">ชั้นปี</th>
-                    <th className="px-4 py-3 text-left text-sm font-semibold text-gray-900 w-24">ห้องเรียน</th>
-                    <th className="px-4 py-3 text-left text-sm font-semibold text-gray-900 w-20">คะแนน</th>
+                  <tr className="bg-background border-b border-border">
+                    <th className="px-4 py-3 text-left text-sm font-semibold text-foreground w-32">ชื่อนักเรียน</th>
+                    <th className="px-4 py-3 text-left text-sm font-semibold text-foreground w-28">สาขาวิชา</th>
+                    <th className="px-4 py-3 text-left text-sm font-semibold text-foreground w-24">ชั้นปี</th>
+                    <th className="px-4 py-3 text-left text-sm font-semibold text-foreground w-24">ห้องเรียน</th>
+                    <th className="px-4 py-3 text-left text-sm font-semibold text-foreground w-20">คะแนน</th>
                   </tr>
                 </thead>
                 <tbody>
                   {students.map((student) => (
-                    <tr key={student.id} className="border-b border-gray-200 hover:bg-gray-50 transition-colors">
-                      <td className="px-4 py-3 text-gray-900">{student.name}</td>
-                      <td className="px-4 py-3 text-gray-900">
+                    <tr key={student.id} className="border-b border-border hover:bg-muted transition-colors">
+                      <td className="px-4 py-3 text-foreground">{student.name}</td>
+                      <td className="px-4 py-3 text-foreground">
                         {student.branch === "electrical" ? "ช่างไฟฟ้า" : "อิเล็กทรอนิกส์"}
                       </td>
-                      <td className="px-4 py-3 text-gray-900">ปวช.{student.year}</td>
-                      <td className="px-4 py-3 text-gray-900">{student.classroom}</td>
-                      <td className="px-4 py-3 text-gray-900">
+                      <td className="px-4 py-3 text-foreground">ปวช.{student.year}</td>
+                      <td className="px-4 py-3 text-foreground">{student.classroom}</td>
+                      <td className="px-4 py-3 text-foreground">
                         {student.score !== undefined ? student.score : "ยังไม่ได้ตรวจคะแนน"}
                       </td>
                     </tr>

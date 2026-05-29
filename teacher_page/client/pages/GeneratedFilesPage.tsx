@@ -569,7 +569,7 @@ const tabOptions: TabOption[] = [
 
 function MockQrCode() {
   return (
-    <div className="grid aspect-square w-36 grid-cols-7 gap-1 rounded-2xl border bg-white p-3 shadow-inner">
+    <div className="grid aspect-square w-36 grid-cols-7 gap-1 rounded-2xl border bg-card p-3 shadow-inner">
       {qrPattern.map((row, rowIndex) =>
         row.map((cell, colIndex) => (
           <span
@@ -746,9 +746,6 @@ export default function GeneratedFilesPage() {
                   <h3 className="mt-1 text-xl font-bold text-foreground">{cleanedTopic}</h3>
                   <p className="mt-2 text-sm text-muted-foreground">เนื้อหาที่ AI สร้างขึ้นจากข้อมูลของคุณ</p>
                 </div>
-                <div className="rounded-2xl bg-secondary/10 p-3 text-secondary">
-                  <FileText className="h-6 w-6" />
-                </div>
               </div>
 
               <div className="max-h-[600px] overflow-y-auto rounded-2xl border bg-muted/10 p-6">
@@ -778,9 +775,6 @@ export default function GeneratedFilesPage() {
                 <p className="text-sm font-medium text-muted-foreground">เนื้อหาการเรียน</p>
                 <h3 className="mt-1 text-xl font-bold text-foreground">{cleanedTopic}</h3>
                 <p className="mt-2 text-sm text-muted-foreground">เนื้อหาที่ AI สร้างขึ้นจากข้อมูลของคุณ</p>
-              </div>
-              <div className="rounded-2xl bg-secondary/10 p-3 text-secondary">
-                <FileText className="h-6 w-6" />
               </div>
             </div>
 
@@ -977,9 +971,6 @@ export default function GeneratedFilesPage() {
                 <h3 className="mt-1 text-xl font-bold text-foreground">เพลงเรื่อง {cleanedTopic}</h3>
                 <p className="mt-2 text-sm text-muted-foreground">บทเพลงเพื่อการเรียน</p>
               </div>
-              <div className="rounded-2xl bg-secondary/10 p-3 text-secondary">
-                <Music2 className="h-6 w-6" />
-              </div>
             </div>
 
             {shouldShowFeaturedMockup ? (
@@ -1028,9 +1019,6 @@ export default function GeneratedFilesPage() {
                   <h3 className="mt-1 text-xl font-bold text-foreground">{cleanedTopic}</h3>
                   <p className="mt-2 text-sm text-muted-foreground">หน้าปกและเป้าหมายการเรียนรู้</p>
                 </div>
-                <div className="rounded-2xl bg-secondary/10 p-3 text-secondary">
-                  <Presentation className="h-6 w-6" />
-                </div>
               </div>
 
               <div className="flex items-center justify-between gap-3 rounded-2xl border bg-muted/20 px-4 py-3">
@@ -1058,9 +1046,6 @@ export default function GeneratedFilesPage() {
                 <p className="text-sm font-medium text-muted-foreground">สไลด์การสอน</p>
                 <h3 className="mt-1 text-xl font-bold text-foreground">สไลด์การสอนเรื่อง {cleanedTopic}</h3>
                 <p className="mt-2 text-sm text-muted-foreground">หน้าปกและเป้าหมายการเรียนรู้</p>
-              </div>
-              <div className="rounded-2xl bg-secondary/10 p-3 text-secondary">
-                <Presentation className="h-6 w-6" />
               </div>
             </div>
 
@@ -1109,9 +1094,6 @@ export default function GeneratedFilesPage() {
                   <h3 className="mt-1 text-xl font-bold text-foreground">{cleanedTopic}</h3>
                   <p className="mt-2 text-sm text-muted-foreground">รูปแบบกิจกรรมการเรียน</p>
                 </div>
-                <div className="rounded-2xl bg-secondary/10 p-3 text-secondary">
-                  <Layers3 className="h-6 w-6" />
-                </div>
               </div>
 
               <div className="space-y-4">
@@ -1157,9 +1139,6 @@ export default function GeneratedFilesPage() {
                 <p className="text-sm font-medium text-muted-foreground">สไลด์กิจกรรม</p>
                 <h3 className="mt-1 text-xl font-bold text-foreground">สไลด์กิจกรรมเรื่อง {cleanedTopic}</h3>
                 <p className="mt-2 text-sm text-muted-foreground">รูปแบบกิจกรรมการเรียน</p>
-              </div>
-              <div className="rounded-2xl bg-secondary/10 p-3 text-secondary">
-                <Layers3 className="h-6 w-6" />
               </div>
             </div>
 
@@ -1230,9 +1209,6 @@ export default function GeneratedFilesPage() {
                   <h3 className="mt-1 text-xl font-bold text-foreground">{cleanedTopic}</h3>
                   <p className="mt-2 text-sm text-muted-foreground">ดาวน์โหลดแบบฝึกหัดและเฉลย</p>
                 </div>
-                <div className="rounded-2xl bg-secondary/10 p-3 text-secondary">
-                  <FileQuestion className="h-6 w-6" />
-                </div>
               </div>
 
               <div className="space-y-4">
@@ -1276,9 +1252,6 @@ export default function GeneratedFilesPage() {
                 <p className="text-sm font-medium text-muted-foreground">แบบฝึกหัด</p>
                 <h3 className="mt-1 text-xl font-bold text-foreground">{quizTitle}</h3>
                 <p className="mt-2 text-sm text-muted-foreground">ดาวน์โหลดแบบฝึกหัดและเฉลย</p>
-              </div>
-              <div className="rounded-2xl bg-secondary/10 p-3 text-secondary">
-                <FileQuestion className="h-6 w-6" />
               </div>
             </div>
 
@@ -1346,9 +1319,6 @@ export default function GeneratedFilesPage() {
                 <p className="text-sm font-medium text-muted-foreground">เกม</p>
                 <h3 className="mt-1 text-xl font-bold text-foreground">{gameTitle}</h3>
                 <p className="mt-2 text-sm text-muted-foreground">เกมการเรียนแบบโต้ตอบ</p>
-              </div>
-              <div className="rounded-2xl bg-secondary/10 p-3 text-secondary">
-                <Gamepad2 className="h-6 w-6" />
               </div>
             </div>
 

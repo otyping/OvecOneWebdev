@@ -29,10 +29,10 @@ export default function Index() {
       <div className="space-y-6">
         {/* Header */}
         <div className="flex flex-col gap-4">
-          <h1 className="text-3xl font-bold text-gray-900">
+          <h1 className="text-3xl font-bold text-foreground">
             Quiz Management System
           </h1>
-          <p className="text-gray-600">
+          <p className="text-muted-foreground">
             Create, manage, and track student quizzes efficiently
           </p>
         </div>
@@ -87,14 +87,14 @@ export default function Index() {
         {/* Recent Quizzes */}
         <div>
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-2xl font-bold text-gray-900">Recent Quizzes</h2>
+            <h2 className="text-2xl font-bold text-foreground">Recent Quizzes</h2>
             <div className="relative">
               <input
                 type="text"
                 placeholder="Search quizzes..."
-                className="bg-gray-100 text-gray-900 placeholder-gray-500 rounded-lg pl-4 pr-10 py-2 focus:outline-none focus:ring-2 focus:ring-brand-red"
+                className="bg-muted text-foreground placeholder:text-muted-foreground rounded-lg pl-4 pr-10 py-2 focus:outline-none focus:ring-2 focus:ring-brand-red"
               />
-              <Search className="absolute right-3 top-2.5 w-5 h-5 text-gray-400" />
+              <Search className="absolute right-3 top-2.5 w-5 h-5 text-muted-foreground" />
             </div>
           </div>
 
@@ -102,11 +102,11 @@ export default function Index() {
             {recentQuizzes.map((quiz) => (
               <div
                 key={quiz.id}
-                className="bg-white border border-gray-200 rounded-lg p-4 flex items-center justify-between hover:shadow-md transition-shadow"
+                className="bg-card border border-border rounded-lg p-4 flex items-center justify-between hover:shadow-md transition-shadow"
               >
                 <div className="flex-1">
-                  <h3 className="font-semibold text-gray-900">{quiz.title}</h3>
-                  <p className="text-sm text-gray-500 mt-1">
+                  <h3 className="font-semibold text-foreground">{quiz.title}</h3>
+                  <p className="text-sm text-muted-foreground mt-1">
                     {quiz.questions} questions • {quiz.date}
                   </p>
                 </div>
@@ -125,17 +125,17 @@ export default function Index() {
 
         {/* Stats */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div className="bg-white border border-gray-200 rounded-lg p-6">
-            <p className="text-gray-600 text-sm font-medium">Total Quizzes</p>
-            <p className="text-3xl font-bold text-gray-900 mt-2">12</p>
+          <div className="bg-card border border-border rounded-lg p-6">
+            <p className="text-muted-foreground text-sm font-medium">Total Quizzes</p>
+            <p className="text-3xl font-bold text-foreground mt-2">12</p>
           </div>
-          <div className="bg-white border border-gray-200 rounded-lg p-6">
-            <p className="text-gray-600 text-sm font-medium">Active Students</p>
-            <p className="text-3xl font-bold text-gray-900 mt-2">48</p>
+          <div className="bg-card border border-border rounded-lg p-6">
+            <p className="text-muted-foreground text-sm font-medium">Active Students</p>
+            <p className="text-3xl font-bold text-foreground mt-2">48</p>
           </div>
-          <div className="bg-white border border-gray-200 rounded-lg p-6">
-            <p className="text-gray-600 text-sm font-medium">Avg. Score</p>
-            <p className="text-3xl font-bold text-gray-900 mt-2">78%</p>
+          <div className="bg-card border border-border rounded-lg p-6">
+            <p className="text-muted-foreground text-sm font-medium">Avg. Score</p>
+            <p className="text-3xl font-bold text-foreground mt-2">78%</p>
           </div>
         </div>
       </div>

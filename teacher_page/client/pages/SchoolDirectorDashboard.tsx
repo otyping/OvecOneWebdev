@@ -3,6 +3,7 @@ import type { ReactNode } from "react";
 import { Building2, GraduationCap, Mars, Search, TrendingUp, Users, Venus } from "lucide-react";
 import Chart from "react-apexcharts";
 import type { ApexOptions } from "apexcharts";
+import { useTheme } from "next-themes";
 import * as XLSX from "xlsx";
 
 import { Button } from "@/components/ui/button";
@@ -332,6 +333,8 @@ function SubjectChart({
   visibleSubjectBars: SubjectScore[];
   isAllSubjects: boolean;
 }) {
+  const { resolvedTheme } = useTheme();
+  const isDark = resolvedTheme === "dark";
   // Convert bar data to colors for distributed bars
   const colors = visibleSubjectBars.map((bar) => {
     const hexColor = bar.colorClass.match(/from-\[([#\w]+)\]/)?.[1] || "#78716C";
@@ -342,6 +345,7 @@ function SubjectChart({
     chart: {
       type: "bar",
       fontFamily: "Kanit, sans-serif",
+      foreColor: isDark ? "#CBD5E1" : "#374151",
       toolbar: {
         show: false,
       },
@@ -356,6 +360,9 @@ function SubjectChart({
           delay: 150,
         },
       },
+    },
+    theme: {
+      mode: isDark ? "dark" : "light",
     },
     plotOptions: {
       bar: {
@@ -378,7 +385,7 @@ function SubjectChart({
     },
     tooltip: {
       enabled: true,
-      theme: "dark",
+      theme: isDark ? "dark" : "light",
       style: {
         fontSize: "12px",
         fontFamily: "Kanit, sans-serif",
@@ -398,14 +405,14 @@ function SubjectChart({
       categories: visibleSubjectBars.map((bar) => bar.label),
       axisBorder: {
         show: true,
-        color: "#E5E7EB",
+        color: isDark ? "rgba(255,255,255,0.10)" : "#E5E7EB",
       },
       axisTicks: {
         show: false,
       },
       labels: {
         style: {
-          colors: "#6B7280",
+          colors: isDark ? "#CBD5E1" : "#6B7280",
           fontSize: isAllSubjects ? "12px" : "13px",
           fontFamily: "Kanit, sans-serif",
           fontWeight: 500,
@@ -421,7 +428,7 @@ function SubjectChart({
       tickAmount: 10,
       labels: {
         style: {
-          colors: "#6B7280",
+          colors: isDark ? "#CBD5E1" : "#6B7280",
           fontSize: "13px",
           fontFamily: "Kanit, sans-serif",
         },
@@ -436,7 +443,7 @@ function SubjectChart({
     },
     grid: {
       show: true,
-      borderColor: "#E5E7EB",
+      borderColor: isDark ? "rgba(255,255,255,0.10)" : "#E5E7EB",
       strokeDashArray: 4,
       position: "back",
       xaxis: {
@@ -479,12 +486,15 @@ function SubjectChart({
 }
 
 function MajorChart() {
+  const { resolvedTheme } = useTheme();
+  const isDark = resolvedTheme === "dark";
   const colors = majorScores.map((score) => score.color);
 
   const chartOptions: ApexOptions = {
     chart: {
       type: "bar",
       fontFamily: "Kanit, sans-serif",
+      foreColor: isDark ? "#CBD5E1" : "#374151",
       toolbar: {
         show: false,
       },
@@ -499,6 +509,9 @@ function MajorChart() {
           delay: 150,
         },
       },
+    },
+    theme: {
+      mode: isDark ? "dark" : "light",
     },
     plotOptions: {
       bar: {
@@ -521,7 +534,7 @@ function MajorChart() {
     },
     tooltip: {
       enabled: true,
-      theme: "dark",
+      theme: isDark ? "dark" : "light",
       style: {
         fontSize: "12px",
         fontFamily: "Kanit, sans-serif",
@@ -541,14 +554,14 @@ function MajorChart() {
       categories: majorScores.map((score) => score.label),
       axisBorder: {
         show: true,
-        color: "#E5E7EB",
+        color: isDark ? "rgba(255,255,255,0.10)" : "#E5E7EB",
       },
       axisTicks: {
         show: false,
       },
       labels: {
         style: {
-          colors: "#6B7280",
+          colors: isDark ? "#CBD5E1" : "#6B7280",
           fontSize: "13px",
           fontFamily: "Kanit, sans-serif",
           fontWeight: 500,
@@ -564,7 +577,7 @@ function MajorChart() {
       tickAmount: 10,
       labels: {
         style: {
-          colors: "#6B7280",
+          colors: isDark ? "#CBD5E1" : "#6B7280",
           fontSize: "13px",
           fontFamily: "Kanit, sans-serif",
         },
@@ -579,7 +592,7 @@ function MajorChart() {
     },
     grid: {
       show: true,
-      borderColor: "#E5E7EB",
+      borderColor: isDark ? "rgba(255,255,255,0.10)" : "#E5E7EB",
       strokeDashArray: 4,
       position: "back",
       xaxis: {
@@ -628,6 +641,8 @@ function ClassroomChart({
   visibleGroupedData: { className: string; values: { key: SubjectKey; label: string; value: number }[] }[];
   visibleSeriesLegend: GroupSeries[];
 }) {
+  const { resolvedTheme } = useTheme();
+  const isDark = resolvedTheme === "dark";
   // Build series data for grouped bars
   const chartSeries = visibleSeriesLegend.map((legend) => ({
     name: legend.label,
@@ -647,6 +662,7 @@ function ClassroomChart({
     chart: {
       type: "bar",
       fontFamily: "Kanit, sans-serif",
+      foreColor: isDark ? "#CBD5E1" : "#374151",
       toolbar: {
         show: false,
       },
@@ -661,6 +677,9 @@ function ClassroomChart({
           delay: 150,
         },
       },
+    },
+    theme: {
+      mode: isDark ? "dark" : "light",
     },
     plotOptions: {
       bar: {
@@ -682,7 +701,7 @@ function ClassroomChart({
     },
     tooltip: {
       enabled: true,
-      theme: "dark",
+      theme: isDark ? "dark" : "light",
       style: {
         fontSize: "12px",
         fontFamily: "Kanit, sans-serif",
@@ -703,14 +722,14 @@ function ClassroomChart({
       categories: visibleGroupedData.map((group) => group.className),
       axisBorder: {
         show: true,
-        color: "#E5E7EB",
+        color: isDark ? "rgba(255,255,255,0.10)" : "#E5E7EB",
       },
       axisTicks: {
         show: false,
       },
       labels: {
         style: {
-          colors: "#6B7280",
+          colors: isDark ? "#CBD5E1" : "#6B7280",
           fontSize: "12px",
           fontFamily: "Kanit, sans-serif",
           fontWeight: 500,
@@ -726,7 +745,7 @@ function ClassroomChart({
       tickAmount: 10,
       labels: {
         style: {
-          colors: "#6B7280",
+          colors: isDark ? "#CBD5E1" : "#6B7280",
           fontSize: "13px",
           fontFamily: "Kanit, sans-serif",
         },
@@ -741,7 +760,7 @@ function ClassroomChart({
     },
     grid: {
       show: true,
-      borderColor: "#E5E7EB",
+      borderColor: isDark ? "rgba(255,255,255,0.10)" : "#E5E7EB",
       strokeDashArray: 4,
       position: "back",
       xaxis: {

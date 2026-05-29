@@ -70,7 +70,7 @@ export default function QuizView() {
     return (
       <Layout>
         <div className="flex items-center justify-center h-screen">
-          <p className="text-gray-600">กำลังโหลด...</p>
+          <p className="text-muted-foreground">กำลังโหลด...</p>
         </div>
       </Layout>
     );
@@ -80,7 +80,7 @@ export default function QuizView() {
     return (
       <Layout>
         <div className="flex flex-col items-center justify-center h-screen gap-4">
-          <p className="text-gray-600">ไม่พบแบบทดสอบ</p>
+          <p className="text-muted-foreground">ไม่พบแบบทดสอบ</p>
           <button
             onClick={() => navigate("/")}
             className="flex items-center gap-2 text-brand-red hover:text-red-700"
@@ -100,78 +100,78 @@ export default function QuizView() {
         <div className="flex items-center gap-4">
           <button
             onClick={() => navigate(-1)}
-            className="flex items-center gap-2 text-brand-red hover:text-red-700 transition-colors p-2 hover:bg-gray-100 rounded-full"
+            className="flex items-center gap-2 text-brand-red hover:text-red-700 transition-colors p-2 hover:bg-muted rounded-full"
             title="กลับ"
           >
             <ArrowLeft className="w-6 h-6" />
           </button>
-          <h1 className="text-3xl font-bold text-gray-900">{quiz.title}</h1>
+          <h1 className="text-3xl font-bold text-foreground">{quiz.title}</h1>
         </div>
 
         {/* Quiz Metadata */}
-        <div className="bg-white border border-gray-200 rounded-2xl p-6">
-          <h2 className="text-lg font-semibold text-gray-900 mb-4">ข้อมูลแบบทดสอบ</h2>
+        <div className="bg-card border border-border rounded-2xl p-6">
+          <h2 className="text-lg font-semibold text-foreground mb-4">ข้อมูลแบบทดสอบ</h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">ชื่อแบบทดสอบ</label>
-              <p className="text-gray-900">{quiz.title}</p>
+              <label className="block text-sm font-medium text-muted-foreground mb-1">ชื่อแบบทดสอบ</label>
+              <p className="text-foreground">{quiz.title}</p>
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">ประเภท</label>
-              <p className="text-gray-900">{quiz.type === "online" ? "ออนไลน์" : "ออฟไลน์"}</p>
+              <label className="block text-sm font-medium text-muted-foreground mb-1">ประเภท</label>
+              <p className="text-foreground">{quiz.type === "online" ? "ออนไลน์" : "ออฟไลน์"}</p>
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">ระยะเวลา (นาที)</label>
-              <p className="text-gray-900">{quiz.timeLimit}</p>
+              <label className="block text-sm font-medium text-muted-foreground mb-1">ระยะเวลา (นาที)</label>
+              <p className="text-foreground">{quiz.timeLimit}</p>
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">จำนวนคำถาม</label>
-              <p className="text-gray-900">{quiz.maxQuestions}</p>
+              <label className="block text-sm font-medium text-muted-foreground mb-1">จำนวนคำถาม</label>
+              <p className="text-foreground">{quiz.maxQuestions}</p>
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">สาขาวิชา</label>
-              <p className="text-gray-900">{quiz.branch === "electrical" ? "ช่างไฟฟ้า" : "อิเล็กทรอนิกส์"}</p>
+              <label className="block text-sm font-medium text-muted-foreground mb-1">สาขาวิชา</label>
+              <p className="text-foreground">{quiz.branch === "electrical" ? "ช่างไฟฟ้า" : "อิเล็กทรอนิกส์"}</p>
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">วิชา</label>
-              <p className="text-gray-900">{quiz.subject}</p>
+              <label className="block text-sm font-medium text-muted-foreground mb-1">วิชา</label>
+              <p className="text-foreground">{quiz.subject}</p>
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">หน่วย</label>
-              <p className="text-gray-900">{quiz.unit}</p>
+              <label className="block text-sm font-medium text-muted-foreground mb-1">หน่วย</label>
+              <p className="text-foreground">{quiz.unit}</p>
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">เรื่อง</label>
-              <p className="text-gray-900">{quiz.topic}</p>
+              <label className="block text-sm font-medium text-muted-foreground mb-1">เรื่อง</label>
+              <p className="text-foreground">{quiz.topic}</p>
             </div>
           </div>
         </div>
 
         {/* Questions */}
         <div className="space-y-4">
-          <h2 className="text-lg font-semibold text-gray-900">คำถาม</h2>
+          <h2 className="text-lg font-semibold text-foreground">คำถาม</h2>
           <div className="space-y-6">
             {Object.entries(quiz.questions || {}).map(([num, q]: [string, any]) => (
-              <div key={num} className="bg-white border border-gray-200 rounded-2xl p-6">
+              <div key={num} className="bg-card border border-border rounded-2xl p-6">
                 <div className="mb-4">
-                  <label className="block text-sm font-medium text-gray-700 mb-2">คำถาม {num}</label>
-                  <p className="text-gray-900 text-base">{q.text || "-"}</p>
+                  <label className="block text-sm font-medium text-muted-foreground mb-2">คำถาม {num}</label>
+                  <p className="text-foreground text-base">{q.text || "-"}</p>
                 </div>
 
                 {q.image && (
                   <div className="mb-4">
-                    <label className="block text-sm font-medium text-gray-700 mb-2">รูปภาพคำถาม</label>
+                    <label className="block text-sm font-medium text-muted-foreground mb-2">รูปภาพคำถาม</label>
                     <img
                       src={q.image}
                       alt="Question"
-                      className="max-w-xs max-h-48 rounded border border-gray-200"
+                      className="max-w-xs max-h-48 rounded border border-border"
                     />
                   </div>
                 )}
 
                 {q.audio && (
                   <div className="mb-4">
-                    <label className="block text-sm font-medium text-gray-700 mb-2">เสียงคำถาม</label>
+                    <label className="block text-sm font-medium text-muted-foreground mb-2">เสียงคำถาม</label>
                     <audio controls className="w-full">
                       <source src={q.audio} />
                     </audio>
@@ -179,27 +179,27 @@ export default function QuizView() {
                 )}
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-3">ตัวเลือกคำตอบ</label>
+                  <label className="block text-sm font-medium text-muted-foreground mb-3">ตัวเลือกคำตอบ</label>
                   <div className="space-y-3">
                     {(q.choices || []).map((choice: any, idx: number) => (
-                      <div key={idx} className="border border-gray-200 rounded-lg p-4">
+                      <div key={idx} className="border border-border rounded-lg p-4">
                         <div className="flex items-start gap-3">
                           <span
                             className={`flex-shrink-0 px-3 py-1 rounded-full text-sm font-bold ${
                               idx === 0
                                 ? "bg-green-100 text-green-800"
-                                : "bg-gray-100 text-gray-700"
+                                : "bg-muted text-muted-foreground"
                             }`}
                           >
                             {String.fromCharCode(65 + idx)}
                           </span>
                           <div className="flex-1">
-                            <p className="text-gray-900">{choice.text || "-"}</p>
+                            <p className="text-foreground">{choice.text || "-"}</p>
                             {choice.image && (
                               <img
                                 src={choice.image}
                                 alt={`Choice ${String.fromCharCode(65 + idx)}`}
-                                className="max-w-xs max-h-32 rounded border border-gray-200 mt-3"
+                                className="max-w-xs max-h-32 rounded border border-border mt-3"
                               />
                             )}
                             {choice.audio && (

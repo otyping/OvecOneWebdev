@@ -2,6 +2,8 @@ import Layout from "@/components/Layout";
 import { Plus, Trash2, ImageIcon } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { Stagger, StaggerItem } from "@/components/motion/Stagger";
+import { useT } from "@/i18n/useT";
 
 interface QuizData {
   id: string;
@@ -20,6 +22,7 @@ interface QuizData {
 
 export default function QuizCreate() {
   const navigate = useNavigate();
+  const t = useT();
   const [quizzes, setQuizzes] = useState<QuizData[]>([]);
   const [filteredQuizzes, setFilteredQuizzes] = useState<QuizData[]>([]);
   const [searchTitle, setSearchTitle] = useState("");
@@ -145,46 +148,46 @@ export default function QuizCreate() {
         {/* Header */}
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900">
-              สร้าง/แก้ไขแบบทดสอบ
+            <h1 className="text-3xl font-bold text-foreground">
+              {t("create.title")}
             </h1>
-            <p className="text-gray-600 mt-2">
-              สร้างแบบทดสอบปรนัยพร้อมสื่อภาพ เสียง และตัวเลือกคำตอบ
+            <p className="text-muted-foreground mt-2">
+              {t("create.subtitle")}
             </p>
           </div>
           <button
             onClick={() => navigate("/quiz/create/form")}
-            className="bg-brand-red hover:bg-red-700 text-white px-6 py-3 rounded-full flex items-center gap-2 font-medium transition-colors"
+            className="bg-brand-red hover:bg-red-700 text-white px-6 py-3 rounded-full flex items-center gap-2 font-medium shadow-soft transition-all duration-200 ease-smooth hover:-translate-y-0.5 hover:shadow-soft-lg active:scale-95 motion-reduce:transform-none"
           >
             <Plus className="w-5 h-5" />
-            สร้างแบบทดสอบใหม่
+            {t("create.new")}
           </button>
         </div>
 
         {/* Filters */}
-        <div className="bg-white border border-gray-200 rounded-xl p-3">
+        <div className="glass rounded-xl p-3">
           <button
             onClick={() => setShowFilters(!showFilters)}
-            className="w-full flex items-center justify-between text-sm font-medium text-gray-900 hover:text-brand-red transition-colors"
+            className="w-full flex items-center justify-between text-sm font-medium text-foreground hover:text-brand-red transition-colors"
           >
-            <span>ตัวกรอง</span>
+            <span>{t("create.filters")}</span>
             <span className={`transform transition-transform ${showFilters ? 'rotate-180' : ''}`}>▼</span>
           </button>
 
           {showFilters && (
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-2 mt-3 pt-3 border-t border-gray-200">
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-2 mt-3 pt-3 border-t border-border">
               <div>
-                <label className="block text-xs font-medium text-gray-700 mb-1">ชื่อแบบทดสอบ</label>
+                <label className="block text-xs font-medium text-muted-foreground mb-1">ชื่อแบบทดสอบ</label>
                 <input
                   type="text"
                   value={searchTitle}
                   onChange={(e) => setSearchTitle(e.target.value)}
-                  placeholder="ค้นหา..."
-                  className="w-full px-2 py-1 border border-gray-300 rounded text-xs focus:outline-none focus:ring-1 focus:ring-brand-red"
+                  placeholder={t("action.search")}
+                  className="w-full px-2 py-1 border border-border bg-background text-foreground rounded text-xs focus:outline-none focus:ring-1 focus:ring-brand-red"
                 />
               </div>
               <div>
-                <label className="block text-xs font-medium text-gray-700 mb-1">สาขาวิชา</label>
+                <label className="block text-xs font-medium text-muted-foreground mb-1">สาขาวิชา</label>
                 <select
                   value={filterBranch}
                   onChange={(e) => {
@@ -193,16 +196,16 @@ export default function QuizCreate() {
                     setFilterUnit("");
                     setFilterTopic("");
                   }}
-                  className="w-full px-2 py-1 border border-gray-300 rounded text-xs focus:outline-none focus:ring-1 focus:ring-brand-red"
+                  className="w-full px-2 py-1 border border-border bg-background text-foreground rounded text-xs focus:outline-none focus:ring-1 focus:ring-brand-red"
                 >
-                  <option value="">ทั้งหมด</option>
+                  <option value="">{t("action.all")}</option>
                   {getUniqueBranches().map(branch => (
                     <option key={branch} value={branch}>{branch === "electrical" ? "ช่างไฟฟ้า" : "อิเล็กทรอนิกส์"}</option>
                   ))}
                 </select>
               </div>
               <div>
-                <label className="block text-xs font-medium text-gray-700 mb-1">วิชา</label>
+                <label className="block text-xs font-medium text-muted-foreground mb-1">วิชา</label>
                 <select
                   value={filterSubject}
                   onChange={(e) => {
@@ -211,16 +214,16 @@ export default function QuizCreate() {
                     setFilterTopic("");
                   }}
                   disabled={!filterBranch}
-                  className="w-full px-2 py-1 border border-gray-300 rounded text-xs focus:outline-none focus:ring-1 focus:ring-brand-red disabled:bg-gray-100"
+                  className="w-full px-2 py-1 border border-border bg-background text-foreground rounded text-xs focus:outline-none focus:ring-1 focus:ring-brand-red disabled:bg-muted"
                 >
-                  <option value="">ทั้งหมด</option>
+                  <option value="">{t("action.all")}</option>
                   {getUniqueSubjects().map(subject => (
                     <option key={subject} value={subject}>{subject}</option>
                   ))}
                 </select>
               </div>
               <div>
-                <label className="block text-xs font-medium text-gray-700 mb-1">หน่วย</label>
+                <label className="block text-xs font-medium text-muted-foreground mb-1">หน่วย</label>
                 <select
                   value={filterUnit}
                   onChange={(e) => {
@@ -228,35 +231,35 @@ export default function QuizCreate() {
                     setFilterTopic("");
                   }}
                   disabled={!filterSubject}
-                  className="w-full px-2 py-1 border border-gray-300 rounded text-xs focus:outline-none focus:ring-1 focus:ring-brand-red disabled:bg-gray-100"
+                  className="w-full px-2 py-1 border border-border bg-background text-foreground rounded text-xs focus:outline-none focus:ring-1 focus:ring-brand-red disabled:bg-muted"
                 >
-                  <option value="">ทั้งหมด</option>
+                  <option value="">{t("action.all")}</option>
                   {getUniqueUnits().map(unit => (
                     <option key={unit} value={unit}>{unit}</option>
                   ))}
                 </select>
               </div>
               <div>
-                <label className="block text-xs font-medium text-gray-700 mb-1">เรื่อง</label>
+                <label className="block text-xs font-medium text-muted-foreground mb-1">เรื่อง</label>
                 <select
                   value={filterTopic}
                   onChange={(e) => setFilterTopic(e.target.value)}
                   disabled={!filterUnit}
-                  className="w-full px-2 py-1 border border-gray-300 rounded text-xs focus:outline-none focus:ring-1 focus:ring-brand-red disabled:bg-gray-100"
+                  className="w-full px-2 py-1 border border-border bg-background text-foreground rounded text-xs focus:outline-none focus:ring-1 focus:ring-brand-red disabled:bg-muted"
                 >
-                  <option value="">ทั้งหมด</option>
+                  <option value="">{t("action.all")}</option>
                   {getUniqueTopics().map(topic => (
                     <option key={topic} value={topic}>{topic}</option>
                   ))}
                 </select>
               </div>
               <div>
-                <label className="block text-xs font-medium text-gray-700 mb-1">วันที่สร้าง</label>
+                <label className="block text-xs font-medium text-muted-foreground mb-1">วันที่สร้าง</label>
                 <input
                   type="date"
                   value={filterDate}
                   onChange={(e) => setFilterDate(e.target.value)}
-                  className="w-full px-2 py-1 border border-gray-300 rounded text-xs focus:outline-none focus:ring-1 focus:ring-brand-red"
+                  className="w-full px-2 py-1 border border-border bg-background text-foreground rounded text-xs focus:outline-none focus:ring-1 focus:ring-brand-red"
                 />
               </div>
             </div>
@@ -265,54 +268,56 @@ export default function QuizCreate() {
 
         {/* Quiz List */}
         <div className="space-y-3">
-          <h2 className="text-lg font-semibold text-gray-900">
-            แบบทดสอบของคุณ ({filteredQuizzes.length})
+          <h2 className="text-lg font-semibold text-foreground">
+            {t("create.yourQuizzes")} ({filteredQuizzes.length})
           </h2>
 
           {filteredQuizzes.length === 0 ? (
-            <div className="bg-white border border-dashed border-gray-300 rounded-2xl p-12 text-center">
-              <div className="inline-flex items-center justify-center w-12 h-12 bg-gray-100 rounded-full mb-4">
-                <ImageIcon className="w-6 h-6 text-gray-400" />
+            <div className="bg-card border border-dashed border-border rounded-2xl p-12 text-center">
+              <div className="inline-flex items-center justify-center w-12 h-12 bg-muted rounded-full mb-4">
+                <ImageIcon className="w-6 h-6 text-muted-foreground" />
               </div>
-              <p className="text-gray-600 font-medium">
-                ยังไม่มีแบบทดสอบ
+              <p className="text-foreground font-medium">
+                {t("create.empty")}
               </p>
-              <p className="text-gray-500 text-sm mt-1">
-                คลิกปุ่ม "สร้างแบบทดสอบใหม่" เพื่อเริ่มต้น
+              <p className="text-muted-foreground text-sm mt-1">
+                {t("create.emptyHint")}
               </p>
             </div>
           ) : (
-            filteredQuizzes.map((quiz) => (
-              <div
-                key={quiz.id}
-                className="bg-white border border-gray-200 rounded-2xl p-4 hover:shadow-md transition-shadow"
-              >
-                <div className="flex items-center justify-between">
-                  <div className="flex-1">
-                    <h3 className="font-semibold text-gray-900">
-                      {quiz.title}
-                    </h3>
-                    <p className="text-sm text-gray-500 mt-1">
-                      {quiz.maxQuestions} คำถาม • {formatDate(quiz.updatedAt)}
-                    </p>
+            <Stagger className="space-y-3">
+              {filteredQuizzes.map((quiz) => (
+                <StaggerItem key={quiz.id}>
+                  <div className="glass rounded-2xl p-4 hover-lift">
+                    <div className="flex items-center justify-between">
+                      <div className="flex-1">
+                        <h3 className="font-semibold text-foreground">
+                          {quiz.title}
+                        </h3>
+                        <p className="text-sm text-muted-foreground mt-1">
+                          {quiz.maxQuestions} {t("create.questions")} • {formatDate(quiz.updatedAt)}
+                        </p>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <button
+                          onClick={() => handleEdit(quiz.id)}
+                          className="bg-card border border-border hover:border-foreground/40 text-foreground px-4 py-2 rounded-full font-medium transition-colors active:scale-95"
+                        >
+                          {t("action.edit")}
+                        </button>
+
+                        <button
+                          onClick={() => handleDelete(quiz.id)}
+                          className="text-red-500 hover:text-red-700 p-2 transition-colors active:scale-90"
+                        >
+                          <Trash2 className="w-5 h-5" />
+                        </button>
+                      </div>
+                    </div>
                   </div>
-                  <div className="flex items-center gap-2">
-                    <button
-                      onClick={() => handleEdit(quiz.id)}
-                      className="bg-white border border-gray-300 hover:border-gray-400 text-gray-900 px-4 py-2 rounded-full font-medium transition-colors"
-                    >
-                      แก้ไข
-                    </button>
-                    <button
-                      onClick={() => handleDelete(quiz.id)}
-                      className="text-red-500 hover:text-red-700 p-2 transition-colors"
-                    >
-                      <Trash2 className="w-5 h-5" />
-                    </button>
-                  </div>
-                </div>
-              </div>
-            ))
+                </StaggerItem>
+              ))}
+            </Stagger>
           )}
         </div>
       </div>

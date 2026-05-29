@@ -3,6 +3,7 @@ import { ArrowUpDown, BarChart3, HelpCircle, Mars, Search, TrendingUp, Users, Ve
 import * as XLSX from "xlsx";
 import Chart from "react-apexcharts";
 import type { ApexOptions } from "apexcharts";
+import { useTheme } from "next-themes";
 
 import { DashboardLayout } from "@/components/DashboardLayout";
 import { Button } from "@/components/ui/button";
@@ -279,7 +280,7 @@ function SummaryCard({
 }) {
   return (
     <div
-      className={`rounded-3xl border bg-card p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg animate-[dashboardFadeIn_0.45s_ease-out_both] ${className}`}
+      className={`rounded-3xl border bg-card p-6 shadow-sm transition-all duration-300 ease-smooth hover:-translate-y-1 hover:shadow-soft-lg animate-[dashboardFadeIn_0.45s_ease-out_both] motion-reduce:animate-none motion-reduce:hover:translate-y-0 ${className}`}
       style={{ animationDelay: `${delay}ms` }}
     >
       <div className="mb-4 flex items-start gap-4">
@@ -295,6 +296,8 @@ function SummaryCard({
 }
 
 function ComparisonChart({ activeTab }: { activeTab: "classroom" | "subjects" }) {
+  const { resolvedTheme } = useTheme();
+  const isDark = resolvedTheme === "dark";
   const comparisonBars = getComparisonBars(activeTab);
 
   // Create color array for bars
@@ -311,6 +314,7 @@ function ComparisonChart({ activeTab }: { activeTab: "classroom" | "subjects" })
     chart: {
       type: "bar",
       fontFamily: "Kanit, sans-serif",
+      foreColor: isDark ? "#CBD5E1" : "#374151",
       toolbar: {
         show: false,
       },
@@ -325,6 +329,9 @@ function ComparisonChart({ activeTab }: { activeTab: "classroom" | "subjects" })
           delay: 150,
         },
       },
+    },
+    theme: {
+      mode: isDark ? "dark" : "light",
     },
     plotOptions: {
       bar: {
@@ -347,7 +354,7 @@ function ComparisonChart({ activeTab }: { activeTab: "classroom" | "subjects" })
     },
     tooltip: {
       enabled: true,
-      theme: "dark",
+      theme: isDark ? "dark" : "light",
       style: {
         fontSize: "12px",
         fontFamily: "Inter, sans-serif",
@@ -367,14 +374,14 @@ function ComparisonChart({ activeTab }: { activeTab: "classroom" | "subjects" })
       categories: comparisonBars.map((bar) => bar.label),
       axisBorder: {
         show: true,
-        color: "#E5E7EB",
+        color: isDark ? "rgba(255,255,255,0.10)" : "#E5E7EB",
       },
       axisTicks: {
         show: false,
       },
       labels: {
         style: {
-          colors: "#6B7280",
+          colors: isDark ? "#CBD5E1" : "#6B7280",
           fontSize: "13px",
           fontFamily: "Kanit, sans-serif",
           fontWeight: 500,
@@ -390,7 +397,7 @@ function ComparisonChart({ activeTab }: { activeTab: "classroom" | "subjects" })
       tickAmount: 10,
       labels: {
         style: {
-          colors: "#6B7280",
+          colors: isDark ? "#CBD5E1" : "#6B7280",
           fontSize: "13px",
           fontFamily: "Kanit, sans-serif",
         },
@@ -405,7 +412,7 @@ function ComparisonChart({ activeTab }: { activeTab: "classroom" | "subjects" })
     },
     grid: {
       show: true,
-      borderColor: "#E5E7EB",
+      borderColor: isDark ? "rgba(255,255,255,0.10)" : "#E5E7EB",
       strokeDashArray: 4,
       position: "back",
       xaxis: {
@@ -746,7 +753,7 @@ export default function Dashboard() {
               />
 
               <div
-                className="rounded-3xl border bg-card p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg animate-[dashboardFadeIn_0.45s_ease-out_both]"
+                className="rounded-3xl border bg-card p-6 shadow-sm transition-all duration-300 ease-smooth hover:-translate-y-1 hover:shadow-soft-lg animate-[dashboardFadeIn_0.45s_ease-out_both] motion-reduce:animate-none motion-reduce:hover:translate-y-0"
                 style={{ animationDelay: "90ms" }}
               >
                 <div className="mb-4 flex items-start gap-4">
@@ -798,7 +805,7 @@ export default function Dashboard() {
               />
 
               <div
-                className="rounded-3xl border bg-card p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg animate-[dashboardFadeIn_0.45s_ease-out_both]"
+                className="rounded-3xl border bg-card p-6 shadow-sm transition-all duration-300 ease-smooth hover:-translate-y-1 hover:shadow-soft-lg animate-[dashboardFadeIn_0.45s_ease-out_both] motion-reduce:animate-none motion-reduce:hover:translate-y-0"
                 style={{ animationDelay: "90ms" }}
               >
                 <div className="mb-4 flex items-start gap-4">
@@ -849,7 +856,7 @@ export default function Dashboard() {
 
         <section className="grid gap-6 xl:grid-cols-1">
           <div
-            className="rounded-3xl border bg-card p-6 shadow-sm transition-all duration-300 hover:shadow-lg animate-[dashboardFadeIn_0.45s_ease-out_both]"
+            className="rounded-3xl border bg-card p-6 shadow-sm transition-all duration-300 ease-smooth hover:shadow-soft-lg animate-[dashboardFadeIn_0.45s_ease-out_both] motion-reduce:animate-none"
             style={{ animationDelay: "240ms" }}
           >
             <div className="mb-5 flex items-start gap-4">
@@ -929,7 +936,7 @@ export default function Dashboard() {
           </div>
 
           <div
-            className="hidden rounded-3xl border bg-card p-6 shadow-sm transition-all duration-300 hover:shadow-lg animate-[dashboardFadeIn_0.45s_ease-out_both]"
+            className="hidden rounded-3xl border bg-card p-6 shadow-sm transition-all duration-300 ease-smooth hover:shadow-soft-lg animate-[dashboardFadeIn_0.45s_ease-out_both] motion-reduce:animate-none"
             style={{ animationDelay: "320ms" }}
           >
             <div className="mb-5 flex items-start gap-4">
