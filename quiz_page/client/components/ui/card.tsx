@@ -1,17 +1,33 @@
 import * as React from "react";
+import { cva, type VariantProps } from "class-variance-authority";
 
 import { cn } from "@/lib/utils";
 
+const cardVariants = cva(
+  "rounded-lg border bg-card text-card-foreground shadow-sm",
+  {
+    variants: {
+      variant: {
+        default: "",
+        // hover-lift: เอาเมาส์ชี้แล้วยกขึ้น + เงานุ่มขึ้น (เคารพ reduced-motion)
+        interactive:
+          "transition-[transform,box-shadow,border-color] duration-300 ease-smooth hover:-translate-y-1 hover:shadow-soft-lg motion-reduce:transition-none motion-reduce:hover:translate-y-0",
+        // glassmorphism (iOS): กระจกฝ้าโปร่งแสง + เบลอ + hover-lift
+        glass:
+          "border-white/40 bg-card/70 backdrop-blur-xl dark:border-white/10 dark:bg-card/55 transition-[transform,box-shadow] duration-300 ease-smooth hover:-translate-y-1 hover:shadow-soft-lg motion-reduce:transition-none motion-reduce:hover:translate-y-0",
+      },
+    },
+    defaultVariants: { variant: "default" },
+  },
+);
+
 const Card = React.forwardRef<
   HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement>
->(({ className, ...props }, ref) => (
+  React.HTMLAttributes<HTMLDivElement> & VariantProps<typeof cardVariants>
+>(({ className, variant, ...props }, ref) => (
   <div
     ref={ref}
-    className={cn(
-      "rounded-lg border bg-card text-card-foreground shadow-sm",
-      className,
-    )}
+    className={cn(cardVariants({ variant }), className)}
     {...props}
   />
 ));
@@ -83,4 +99,5 @@ export {
   CardTitle,
   CardDescription,
   CardContent,
+  cardVariants,
 };

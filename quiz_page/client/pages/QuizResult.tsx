@@ -30,7 +30,7 @@ export default function QuizResult() {
     return (
       <Layout>
         <div className="flex items-center justify-center min-h-[60vh]">
-          <p className="text-gray-500">ไม่พบข้อมูลคะแนน</p>
+          <p className="text-muted-foreground">ไม่พบข้อมูลคะแนน</p>
         </div>
       </Layout>
     );
@@ -43,32 +43,32 @@ export default function QuizResult() {
   return (
     <Layout>
       <div className="max-w-2xl mx-auto space-y-6">
-        <div className="bg-white border border-gray-200 rounded-2xl p-8 text-center space-y-8">
+        <div className="bg-card border border-border rounded-2xl p-8 text-center space-y-8">
           {/* Header */}
           <div>
-            <h1 className="text-4xl font-bold text-gray-900 mb-2">ส่งแบบทดสอบแล้ว</h1>
-            <p className="text-gray-600">แบบทดสอบ: {scoreData.quizTitle}</p>
+            <h1 className="text-4xl font-bold text-foreground mb-2">ส่งแบบทดสอบแล้ว</h1>
+            <p className="text-muted-foreground">แบบทดสอบ: {scoreData.quizTitle}</p>
           </div>
 
           {/* Score Card */}
-          <div className="bg-gray-50 border border-gray-200 rounded-xl p-8 space-y-4">
-            <p className="text-sm font-medium text-gray-700">คะแนนของคุณ</p>
-            <div className="text-5xl font-bold text-gray-900">
+          <div className="bg-background border border-border rounded-xl p-8 space-y-4">
+            <p className="text-sm font-medium text-muted-foreground">คะแนนของคุณ</p>
+            <div className="text-5xl font-bold text-foreground">
               {scoreData.score}/{scoreData.totalQuestions}
             </div>
-            <p className="text-2xl font-semibold text-gray-900">{percentage}%</p>
+            <p className="text-2xl font-semibold text-foreground">{percentage}%</p>
           </div>
 
           {/* Stats */}
-          <div className="bg-gray-50 border border-gray-200 rounded-lg p-6">
-            <p className="text-sm text-gray-600 mb-2">เวลาที่ใช้</p>
-            <p className="text-2xl font-bold text-gray-900">
+          <div className="bg-background border border-border rounded-lg p-6">
+            <p className="text-sm text-muted-foreground mb-2">เวลาที่ใช้</p>
+            <p className="text-2xl font-bold text-foreground">
               {minutes}:{seconds.toString().padStart(2, '0')}
             </p>
           </div>
 
           {/* Completion Info */}
-          <div className="text-sm text-gray-500">
+          <div className="text-sm text-muted-foreground">
             <p>เสร็จสิ้นเมื่อ: {new Date(scoreData.completedAt).toLocaleString("th-TH")}</p>
           </div>
 

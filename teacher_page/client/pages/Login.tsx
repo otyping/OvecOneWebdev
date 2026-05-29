@@ -10,10 +10,22 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { BookOpen } from "lucide-react";
+import { BookOpen, Sparkles } from "lucide-react";
+import { Stagger, StaggerItem } from "@/components/motion/Stagger";
+import { BRAND } from "@/config/brand";
+import { useT } from "@/i18n/useT";
+import { LanguageToggle } from "@/components/LanguageToggle";
+import { ThemeToggle } from "@/components/ThemeToggle";
+
+/** ภาพ hero โทน AI/เทคโนโลยีทันสมัย (เปลี่ยน URL ได้ที่นี่จุดเดียว) */
+const HERO_IMAGE =
+  "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=1600&q=80";
+
+const onLight = "border-white/40 text-white hover:bg-white/15";
 
 export default function Login() {
   const navigate = useNavigate();
+  const t = useT();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
@@ -21,143 +33,132 @@ export default function Login() {
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
-    // Store email in localStorage if "Remember me" is checked
     if (rememberMe) {
       localStorage.setItem("rememberedEmail", email);
     }
-    // Store simple auth state (in production, this would validate against backend)
     localStorage.setItem("isAuthenticated", "true");
     localStorage.setItem("userEmail", email);
-    navigate("/dashboard/lesson-plan");
-  };
-
-  const handleForgotPassword = () => {
-    setShowForgotModal(true);
+    navigate("/dashboard/home");
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background to-muted flex">
-      {/* Left side - Hero section */}
-      <div className="hidden lg:flex lg:w-1/2 flex-col justify-center items-start p-12 relative bg-gradient-to-br from-primary/5 to-accent/5 overflow-hidden">
-        {/* Background image with low opacity */}
-        <div
-          className="absolute inset-0 bg-cover bg-center opacity-30"
-          style={{
-            backgroundImage: `url('https://cdn.builder.io/api/v1/image/assets%2Fa061ccedc21643e89c15d64ceb68a9d5%2F9ef5f147337044a3a4a9ed41a7ad468d')`,
-          }}
-        />
-        {/* Light gradient overlay */}
-        <div className="absolute inset-0 bg-gradient-to-b from-white/40 via-transparent to-transparent" />
-        {/* Content */}
-        <div className="relative z-10">
-          <div className="flex items-center gap-3 mb-8">
-            <div className="bg-primary text-primary-foreground p-3 rounded-full">
-              <BookOpen className="w-6 h-6" />
-            </div>
-            <h1 className="text-3xl font-bold text-foreground">OVEC One</h1>
-          </div>
-          <h2 className="mb-6 text-4xl font-bold text-foreground">
-            AI Buddy for Teachers.
-          </h2>
-          <p className="mb-8 max-w-md text-lg text-muted-foreground">
-            ช่วยสร้างสรรค์แผนการสอน สร้างกิจกรรม สื่อการสอนวิดีโอและเพลง แบบฝึกหัด ครบ จบ พร้อมใช้งานได้ทันที
-          </p>
-        </div>
+    <div className="relative flex min-h-screen items-center justify-center overflow-hidden px-4 py-10">
+      {/* ── พื้นหลัง: ภาพ AI + เคลือบโทนแดงตามธีม + กริด + แสงเรือง ── */}
+      <img
+        src={HERO_IMAGE}
+        alt=""
+        className="absolute inset-0 h-full w-full object-cover"
+      />
+      <div className="absolute inset-0 bg-gradient-to-br from-secondary/90 via-red-600/85 to-primary/90" />
+      <div
+        className="absolute inset-0 opacity-[0.10]"
+        style={{
+          backgroundImage:
+            "linear-gradient(to right, #fff 1px, transparent 1px), linear-gradient(to bottom, #fff 1px, transparent 1px)",
+          backgroundSize: "36px 36px",
+        }}
+      />
+      <div className="absolute -left-20 -top-24 h-80 w-80 rounded-full bg-white/20 blur-3xl" />
+      <div className="absolute -bottom-24 -right-16 h-80 w-80 rounded-full bg-cyan-300/20 blur-3xl" />
+
+      {/* ปุ่มภาษา/ธีม มุมขวาบน */}
+      <div className="absolute right-4 top-4 z-20 flex items-center gap-2">
+        <LanguageToggle className={onLight} />
+        <ThemeToggle className={onLight} />
       </div>
 
-      {/* Right side - Login form */}
-      <div className="w-full lg:w-1/2 flex flex-col justify-center items-center px-6 py-12 sm:px-8 sm:py-16">
-        <div className="w-full max-w-sm">
-          {/* Mobile header */}
-          <div className="lg:hidden flex items-center gap-3 mb-8">
-            <div className="bg-primary text-primary-foreground p-2 rounded-full">
-              <BookOpen className="w-5 h-5" />
-            </div>
-            <h1 className="text-2xl font-bold text-foreground">OVEC One</h1>
-          </div>
+      {/* ── การ์ดล็อกอินกระจกฝ้า (กลางจอ) ── */}
+      <Stagger onView={false} className="relative z-10 w-full max-w-md">
+        <StaggerItem className="mb-6 flex flex-col items-center text-center text-white">
+          <span className="mb-3 grid h-14 w-14 place-items-center rounded-2xl bg-white/15 ring-1 ring-white/30 backdrop-blur">
+            <BookOpen className="h-7 w-7" />
+          </span>
+          <h1 className="text-2xl font-bold">{BRAND.appName}</h1>
+          <span className="mt-2 inline-flex items-center gap-1.5 rounded-full bg-white/15 px-3 py-1 text-xs font-medium backdrop-blur">
+            <Sparkles className="h-3.5 w-3.5" />
+            {t("brand.tagline")}
+          </span>
+        </StaggerItem>
 
-          <h2 className="text-3xl font-bold text-foreground mb-2">ยินดีต้อนรับ</h2>
-          <p className="text-muted-foreground mb-8">
-            ลงชื่อเข้าใช้บัญชีของคุณเพื่อดำเนินการต่อ
-          </p>
+        <StaggerItem>
+          <div className="glass rounded-3xl p-7 shadow-soft-lg sm:p-8">
+            <h2 className="text-2xl font-bold text-foreground">{t("login.welcome")}</h2>
+            <p className="mt-1 text-sm text-muted-foreground">{t("login.subtitle")}</p>
 
-          <form onSubmit={handleLogin} className="space-y-5">
-            <div className="space-y-2">
-              <label htmlFor="email" className="text-sm font-medium text-foreground">
-                อีเมลหรือรหัสประจำตัว
-              </label>
-              <Input
-                id="email"
-                type="text"
-                placeholder="your@email.com หรือ รหัส"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="rounded-full h-11"
-                required
-              />
-            </div>
-
-            <div className="space-y-2">
-              <label htmlFor="password" className="text-sm font-medium text-foreground">
-                รหัสผ่าน
-              </label>
-              <Input
-                id="password"
-                type="password"
-                placeholder="••••••••"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="rounded-full h-11"
-                required
-              />
-            </div>
-
-            <div className="flex items-center justify-between pt-2">
-              <div className="flex items-center space-x-2">
-                <Checkbox
-                  id="remember"
-                  checked={rememberMe}
-                  onCheckedChange={(checked) =>
-                    setRememberMe(checked as boolean)
-                  }
-                />
-                <label
-                  htmlFor="remember"
-                  className="text-sm text-muted-foreground cursor-pointer"
-                >
-                  จำฉันไว้
+            <form onSubmit={handleLogin} className="mt-6 space-y-4">
+              <div className="space-y-2">
+                <label htmlFor="email" className="text-sm font-medium text-foreground">
+                  {t("login.emailLabel")}
                 </label>
+                <Input
+                  id="email"
+                  type="text"
+                  placeholder="your@email.com / รหัส"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="h-11 rounded-xl bg-background/70"
+                  required
+                />
               </div>
-              <button
-                type="button"
-                onClick={handleForgotPassword}
-                className="text-sm text-primary hover:text-accent font-medium transition-colors"
+
+              <div className="space-y-2">
+                <label htmlFor="password" className="text-sm font-medium text-foreground">
+                  {t("login.password")}
+                </label>
+                <Input
+                  id="password"
+                  type="password"
+                  placeholder="••••••••"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="h-11 rounded-xl bg-background/70"
+                  required
+                />
+              </div>
+
+              <div className="flex items-center justify-between pt-1">
+                <div className="flex items-center space-x-2">
+                  <Checkbox
+                    id="remember"
+                    checked={rememberMe}
+                    onCheckedChange={(checked) => setRememberMe(checked as boolean)}
+                  />
+                  <label
+                    htmlFor="remember"
+                    className="cursor-pointer text-sm text-muted-foreground"
+                  >
+                    {t("login.remember")}
+                  </label>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setShowForgotModal(true)}
+                  className="text-sm font-medium text-secondary transition-colors hover:text-secondary/80"
+                >
+                  {t("login.forgot")}
+                </button>
+              </div>
+
+              <Button
+                type="submit"
+                className="h-11 w-full rounded-xl text-base font-semibold shadow-soft"
               >
-                ลืมรหัสผ่าน?
-              </button>
-            </div>
+                {t("login.submit")}
+              </Button>
+            </form>
 
-            <Button
-              type="submit"
-              className="w-full h-11 rounded-full font-semibold text-base"
-            >
-              ลงชื่อเข้าใช้
-            </Button>
-          </form>
-
-          <div className="mt-8 text-center">
-            <p className="text-muted-foreground">
-              ยังไม่มีบัญชี?{" "}
+            <p className="mt-6 text-center text-sm text-muted-foreground">
+              {t("login.noAccount")}{" "}
               <Link
                 to="/register"
-                className="text-secondary hover:text-secondary/80 font-medium transition-colors underline"
+                className="font-medium text-secondary underline-offset-2 transition-colors hover:underline"
               >
-                ลงทะเบียนที่นี่
+                {t("login.registerHere")}
               </Link>
             </p>
           </div>
-        </div>
-      </div>
+        </StaggerItem>
+      </Stagger>
 
       {/* Forgot Password Modal */}
       <Dialog open={showForgotModal} onOpenChange={setShowForgotModal}>
@@ -171,8 +172,8 @@ export default function Login() {
           <div className="py-4 space-y-4">
             <p className="text-foreground">
               รหัสผ่านของคุณได้รับการตั้งค่าใหม่เป็นวันเกิดของคุณในรูปแบบ{" "}
-              <span className="font-semibold">MMDD</span> (ตัวอย่างเช่น:
-              0525 สำหรับ 25 พฤษภาคม)
+              <span className="font-semibold">MMDD</span> (ตัวอย่างเช่น: 0525
+              สำหรับ 25 พฤษภาคม)
             </p>
             <div className="bg-muted p-4 rounded-lg border border-border">
               <p className="text-sm text-muted-foreground mb-2">ตัวอย่าง:</p>
@@ -192,10 +193,7 @@ export default function Login() {
             >
               ปิด
             </Button>
-            <Button
-              onClick={() => setShowForgotModal(false)}
-              className="rounded-full"
-            >
+            <Button onClick={() => setShowForgotModal(false)} className="rounded-full">
               เข้าใจแล้ว
             </Button>
           </div>

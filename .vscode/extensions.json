@@ -1,0 +1,19 @@
+{
+  // Extensions ที่แนะนำสำหรับโปรเจค OVEC One (React + Vite + TailwindCSS)
+  // VS Code จะถามให้ติดตั้งตัวที่ยังไม่มีเมื่อเปิด workspace นี้
+  "recommendations": [
+    // จำเป็น: autocomplete + preview ค่าสี/คลาส Tailwind
+    "bradlc.vscode-tailwindcss",
+    // จัด format โค้ดอัตโนมัติ (โปรเจคมี .prettierrc อยู่แล้ว)
+    "esbenp.prettier-vscode",
+    // ทางเลือกดู live preview + DevTools ภายใน VS Code (ชี้ไป localhost:8080/8081)
+    "ms-edgedevtools.vscode-edge-devtools",
+    // โชว์ error/warning แบบ inline บนบรรทัดโค้ด (เสริม)
+    "usernamehw.errorlens"
+  ],
+  "unwantedRecommendations": [
+    // Live Server เสิร์ฟไฟล์ static เท่านั้น — ใช้กับแอป Vite/React ตัวนี้ไม่ได้
+    // ให้ preview ผ่าน `pnpm dev` + Simple Browser แทน
+    "ritwickdey.liveserver"
+  ]
+}

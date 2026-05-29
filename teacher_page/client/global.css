@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Kanit:wght@400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+Thai:wght@400;500;600;700&family=Kanit:wght@400;500;600;700&display=swap");
 
 @tailwind base;
 @tailwind components;
@@ -11,6 +11,13 @@
    * A different format will require also updating the theme in tailwind.config.ts.
   */
   :root {
+    /* ─────────────────────────────────────────────────────────────
+     * ฟอนต์ของทั้งเว็บ: เปลี่ยนฟอนต์โดยแก้ --font-sans ที่นี่
+     * + แก้ @import url(...) บรรทัดบนสุดของไฟล์ให้โหลดฟอนต์ใหม่
+     * สีธีมทั้งหมดอยู่ในบล็อกนี้ (light) และ .dark (dark) — แก้ที่นี่ที่เดียว
+     * ───────────────────────────────────────────────────────────── */
+    --font-sans: "Inter", "Noto Sans Thai", "Kanit", sans-serif;
+
     --background: 220 25% 98%;
     --foreground: 225 38% 16%;
 
@@ -106,11 +113,21 @@
     @apply bg-background text-foreground;
     background-image: linear-gradient(135deg, hsl(var(--background)) 0%, hsl(220 25% 95%) 45%, hsl(0 50% 95%) 100%);
     background-attachment: fixed;
-    font-family: "Kanit", "Inter", sans-serif;
+    font-family: var(--font-sans);
+  }
+
+  /* โหมดมืด: ใช้ไล่เฉดโทนเข้มแทน (ไม่งั้นจุดสีอ่อนที่ fix ไว้จะหลุดธีม) */
+  .dark body {
+    background-image: linear-gradient(
+      135deg,
+      hsl(var(--background)) 0%,
+      hsl(225 30% 13%) 45%,
+      hsl(225 28% 16%) 100%
+    );
   }
 
   ::placeholder {
-    color: hsl(215 14% 55%);
+    color: hsl(var(--muted-foreground));
     opacity: 1;
   }
 
@@ -123,6 +140,33 @@
   code {
     overflow-x: auto;
     white-space: pre;
+  }
+}
+
+@layer components {
+  /* ลูกเล่น hover-lift: เอาเมาส์ชี้แล้ว "ยกขึ้น" + เงานุ่มขึ้น
+   * ใช้กับ element ทั่วไปที่ไม่ใช่ <Card> (Card ใช้ variant="interactive" แทน)
+   * เคารพ prefers-reduced-motion ให้อัตโนมัติ */
+  .hover-lift {
+    @apply transition-[transform,box-shadow] duration-300 ease-smooth;
+  }
+  .hover-lift:hover {
+    @apply -translate-y-1 shadow-soft-lg;
+  }
+  /* การ์ดกระจกฝ้า (glassmorphism สไตล์ iOS) — โปร่งแสง + เบลอพื้นหลัง */
+  .glass {
+    @apply border border-white/40 bg-card/70 shadow-soft backdrop-blur-xl;
+  }
+  .dark .glass {
+    @apply border-white/10 bg-card/55;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .hover-lift {
+      @apply transition-none;
+    }
+    .hover-lift:hover {
+      @apply translate-y-0;
+    }
   }
 }
 

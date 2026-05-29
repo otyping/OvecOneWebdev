@@ -1228,56 +1228,56 @@ export default function QuizCreateForm() {
     <Layout>
       <div className="space-y-6 w-full">
         <div>
-          <h1 className="text-2xl md:text-3xl font-bold text-gray-900">สร้างแบบทดสอบใหม่</h1>
-          <p className="text-sm md:text-base text-gray-600 mt-2">เพิ่มคำถามและตัวเลือกคำตอบของคุณ</p>
+          <h1 className="text-2xl md:text-3xl font-bold text-foreground">สร้างแบบทดสอบใหม่</h1>
+          <p className="text-sm md:text-base text-muted-foreground mt-2">เพิ่มคำถามและตัวเลือกคำตอบของคุณ</p>
         </div>
 
-        <div className="bg-white border border-gray-200 rounded-2xl p-4 md:p-8 space-y-6">
-          <h2 className="text-base md:text-lg font-semibold text-gray-900">รายละเอียดแบบทดสอบ</h2>
+        <div className="bg-card border border-border rounded-2xl p-4 md:p-8 space-y-6">
+          <h2 className="text-base md:text-lg font-semibold text-foreground">รายละเอียดแบบทดสอบ</h2>
           <div className="space-y-4">
             <div>
-              <label className="block text-xs md:text-sm font-medium text-gray-900 mb-2">ชื่อแบบทดสอบ</label>
-              <input type="text" value={quizTitle} onChange={(e) => setQuizTitle(e.target.value)} placeholder="เช่น บทที่ 1: คณิตศาสตร์พื้นฐาน" className="w-full px-4 py-3 border border-gray-300 rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-brand-red" />
+              <label className="block text-xs md:text-sm font-medium text-foreground mb-2">ชื่อแบบทดสอบ</label>
+              <input type="text" value={quizTitle} onChange={(e) => setQuizTitle(e.target.value)} placeholder="เช่น บทที่ 1: คณิตศาสตร์พื้นฐาน" className="w-full px-4 py-3 border border-border rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-brand-red" />
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label className="block text-xs md:text-sm font-medium text-gray-900 mb-2">ประเภทแบบทดสอบ</label>
-                <select value={quizType} onChange={(e) => setQuizType(e.target.value)} className="w-full px-4 py-3 border border-gray-300 rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-brand-red">
+                <label className="block text-xs md:text-sm font-medium text-foreground mb-2">ประเภทแบบทดสอบ</label>
+                <select value={quizType} onChange={(e) => setQuizType(e.target.value)} className="w-full px-4 py-3 border border-border rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-brand-red">
                   <option value="online">ออนไลน์</option>
                   <option value="offline">ออฟไลน์</option>
                 </select>
               </div>
               <div>
-                <label className="block text-xs md:text-sm font-medium text-gray-900 mb-2">ระยะเวลาในการทำ (นาที)</label>
-                <input type="number" value={timeLimit} onChange={(e) => setTimeLimit(e.target.value)} placeholder="30" className="w-full px-4 py-3 border border-gray-300 rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-brand-red" />
+                <label className="block text-xs md:text-sm font-medium text-foreground mb-2">ระยะเวลาในการทำ (นาที)</label>
+                <input type="number" value={timeLimit} onChange={(e) => setTimeLimit(e.target.value)} placeholder="30" className="w-full px-4 py-3 border border-border rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-brand-red" />
               </div>
             </div>
 
-            <div className="space-y-4 pt-4 border-t border-gray-200">
+            <div className="space-y-4 pt-4 border-t border-border">
               <div>
-                <label className="block text-xs md:text-sm font-medium text-gray-900 mb-2">สาขาวิชา</label>
-                <select value={branch} onChange={handleBranchChange} className="w-full px-4 py-3 border border-gray-300 rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-brand-red">
+                <label className="block text-xs md:text-sm font-medium text-foreground mb-2">สาขาวิชา</label>
+                <select value={branch} onChange={handleBranchChange} className="w-full px-4 py-3 border border-border rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-brand-red">
                   <option value="electrical">ช่างไฟฟ้า</option>
                   <option value="electronics">อิเล็กทรอนิกส์</option>
                 </select>
               </div>
               <div>
-                <label className="block text-xs md:text-sm font-medium text-gray-900 mb-2">วิชา</label>
-                <select value={subject} onChange={handleSubjectChange} className="w-full px-4 py-3 border border-gray-300 rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-brand-red">
+                <label className="block text-xs md:text-sm font-medium text-foreground mb-2">วิชา</label>
+                <select value={subject} onChange={handleSubjectChange} className="w-full px-4 py-3 border border-border rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-brand-red">
                   <option value="">-- เลือกวิชา --</option>
                   {getSubjects().map((subj) => <option key={subj} value={subj}>{subj}</option>)}
                 </select>
               </div>
               <div>
-                <label className="block text-xs md:text-sm font-medium text-gray-900 mb-2">หน่วย</label>
-                <select value={unit} onChange={handleUnitChange} disabled={!subject} className="w-full px-4 py-3 border border-gray-300 rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-brand-red disabled:bg-gray-100 disabled:text-gray-400">
+                <label className="block text-xs md:text-sm font-medium text-foreground mb-2">หน่วย</label>
+                <select value={unit} onChange={handleUnitChange} disabled={!subject} className="w-full px-4 py-3 border border-border rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-brand-red disabled:bg-muted disabled:text-muted-foreground">
                   <option value="">-- เลือกหน่วย --</option>
                   {getUnits().map((u) => <option key={u} value={u}>{u}</option>)}
                 </select>
               </div>
               <div>
-                <label className="block text-xs md:text-sm font-medium text-gray-900 mb-2">เรื่อง</label>
-                <select value={topic} onChange={(e) => setTopic(e.target.value)} disabled={!unit} className="w-full px-4 py-3 border border-gray-300 rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-brand-red disabled:bg-gray-100 disabled:text-gray-400">
+                <label className="block text-xs md:text-sm font-medium text-foreground mb-2">เรื่อง</label>
+                <select value={topic} onChange={(e) => setTopic(e.target.value)} disabled={!unit} className="w-full px-4 py-3 border border-border rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-brand-red disabled:bg-muted disabled:text-muted-foreground">
                   <option value="">-- เลือกเรื่อง --</option>
                   {getTopics().map((t) => <option key={t} value={t}>{t}</option>)}
                 </select>
@@ -1286,9 +1286,9 @@ export default function QuizCreateForm() {
           </div>
         </div>
 
-        <div className="bg-white border border-gray-200 rounded-2xl p-4 md:p-8 space-y-6">
+        <div className="bg-card border border-border rounded-2xl p-4 md:p-8 space-y-6">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-            <h2 className="text-base md:text-lg font-semibold text-gray-900">เลือกคำถาม</h2>
+            <h2 className="text-base md:text-lg font-semibold text-foreground">เลือกคำถาม</h2>
             <button onClick={addMoreQuestions} className="flex items-center gap-2 px-4 py-2 bg-brand-red hover:bg-red-700 text-white rounded-full font-medium text-sm transition-colors">
               <Plus className="w-4 h-4" />
               เพิ่มข้อ
@@ -1296,16 +1296,16 @@ export default function QuizCreateForm() {
           </div>
           <div className="flex flex-wrap gap-2">
             {Array.from({ length: maxQuestions }, (_, i) => i + 1).map((num) => (
-              <button key={num} onClick={() => setCurrentQuestion(num)} className={`w-10 h-10 rounded-full font-semibold text-sm transition-colors ${currentQuestion === num ? "bg-brand-red text-white" : "bg-gray-200 text-gray-700 hover:bg-gray-300"}`}>
+              <button key={num} onClick={() => setCurrentQuestion(num)} className={`w-10 h-10 rounded-full font-semibold text-sm transition-colors ${currentQuestion === num ? "bg-brand-red text-white" : "bg-muted text-muted-foreground hover:bg-muted"}`}>
                 {num}
               </button>
             ))}
           </div>
         </div>
 
-        <div className="bg-white border border-gray-200 rounded-2xl p-4 md:p-8 space-y-6">
+        <div className="bg-card border border-border rounded-2xl p-4 md:p-8 space-y-6">
           <div className="flex items-center justify-between">
-            <h2 className="text-base md:text-lg font-semibold text-gray-900">คำถาม {currentQuestion}</h2>
+            <h2 className="text-base md:text-lg font-semibold text-foreground">คำถาม {currentQuestion}</h2>
             {maxQuestions > 1 && (
               <button onClick={() => deleteQuestion(currentQuestion)} className="flex items-center gap-2 px-3 py-2 text-red-600 hover:bg-red-50 rounded-full text-sm font-medium transition-colors">
                 <Trash2 className="w-4 h-4" />
@@ -1313,17 +1313,17 @@ export default function QuizCreateForm() {
               </button>
             )}
           </div>
-          <div className="bg-gray-50 border border-dashed border-gray-300 rounded-2xl p-4 md:p-6 space-y-4">
+          <div className="bg-background border border-dashed border-border rounded-2xl p-4 md:p-6 space-y-4">
             <div>
-              <label className="block text-xs md:text-sm font-medium text-gray-900 mb-2">คำถาม</label>
-              <textarea value={current.text} onChange={(e) => handleQuestionTextChange(e.target.value)} placeholder="พิมพ์คำถาม..." rows={2} className="w-full px-4 py-3 border border-gray-300 rounded-2xl text-sm focus:outline-none focus:ring-2 focus:ring-brand-red" />
+              <label className="block text-xs md:text-sm font-medium text-foreground mb-2">คำถาม</label>
+              <textarea value={current.text} onChange={(e) => handleQuestionTextChange(e.target.value)} placeholder="พิมพ์คำถาม..." rows={2} className="w-full px-4 py-3 border border-border rounded-2xl text-sm focus:outline-none focus:ring-2 focus:ring-brand-red" />
             </div>
             <div className="flex flex-col sm:flex-row gap-2">
-              <label className="flex items-center justify-center sm:justify-start gap-2 px-4 py-2 border border-gray-300 rounded-full hover:bg-gray-100 text-gray-700 text-sm font-medium transition-colors cursor-pointer">
+              <label className="flex items-center justify-center sm:justify-start gap-2 px-4 py-2 border border-border rounded-full hover:bg-muted text-muted-foreground text-sm font-medium transition-colors cursor-pointer">
                 <ImageIcon className="w-4 h-4" />เพิ่มรูปภาพ
                 <input type="file" accept="image/*" onChange={(e) => e.target.files?.[0] && handleQuestionImageUpload(e.target.files[0])} className="hidden" />
               </label>
-              <label className="flex items-center justify-center sm:justify-start gap-2 px-4 py-2 border border-gray-300 rounded-full hover:bg-gray-100 text-gray-700 text-sm font-medium transition-colors cursor-pointer">
+              <label className="flex items-center justify-center sm:justify-start gap-2 px-4 py-2 border border-border rounded-full hover:bg-muted text-muted-foreground text-sm font-medium transition-colors cursor-pointer">
                 <Mic className="w-4 h-4" />เพิ่มเสียง
                 <input type="file" accept="audio/*" onChange={(e) => e.target.files?.[0] && handleQuestionAudioUpload(e.target.files[0])} className="hidden" />
               </label>
@@ -1333,7 +1333,7 @@ export default function QuizCreateForm() {
                 <button onClick={() => setSelectedImage(current.image)} className="max-h-64 max-w-full rounded-lg object-contain self-start cursor-pointer hover:opacity-80 transition-opacity">
                   <img src={current.image} alt="Question preview" className="max-h-64 max-w-full rounded-lg object-contain" />
                 </button>
-                <button onClick={deleteQuestionImage} className="flex items-center gap-2 px-3 py-1 border border-gray-300 text-gray-700 hover:bg-gray-100 rounded-full text-sm font-medium transition-colors w-fit">
+                <button onClick={deleteQuestionImage} className="flex items-center gap-2 px-3 py-1 border border-border text-muted-foreground hover:bg-muted rounded-full text-sm font-medium transition-colors w-fit">
                   <Trash2 className="w-3 h-3" />
                   ลบรูปภาพ
                 </button>
@@ -1342,7 +1342,7 @@ export default function QuizCreateForm() {
             {current.audio && (
               <div className="flex flex-col gap-2">
                 <audio src={current.audio} controls className="max-w-xs rounded-lg" />
-                <button onClick={deleteQuestionAudio} className="flex items-center gap-2 px-3 py-1 border border-gray-300 text-gray-700 hover:bg-gray-100 rounded-full text-sm font-medium transition-colors w-fit">
+                <button onClick={deleteQuestionAudio} className="flex items-center gap-2 px-3 py-1 border border-border text-muted-foreground hover:bg-muted rounded-full text-sm font-medium transition-colors w-fit">
                   <Trash2 className="w-3 h-3" />
                   ลบเสียง
                 </button>
@@ -1350,8 +1350,8 @@ export default function QuizCreateForm() {
             )}
             <div className="space-y-3">
               <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
-                <label className="block text-xs md:text-sm font-medium text-gray-900">ตัวเลือกคำตอบ</label>
-                <span className="text-xs text-gray-500">ตัวเลือก A เป็นคำตอบที่ถูกต้องเสมอ</span>
+                <label className="block text-xs md:text-sm font-medium text-foreground">ตัวเลือกคำตอบ</label>
+                <span className="text-xs text-muted-foreground">ตัวเลือก A เป็นคำตอบที่ถูกต้องเสมอ</span>
               </div>
               {safeChoices.map((choice, index) => {
                 const label = getChoiceLabel(index);
@@ -1361,13 +1361,13 @@ export default function QuizCreateForm() {
                   <div key={index} className="flex flex-col gap-2">
                     <div className="flex flex-col sm:flex-row sm:items-center gap-3">
                       <span className={`w-8 h-8 ${isOptionA ? 'bg-green-500' : 'bg-brand-red'} text-white rounded-full flex items-center justify-center text-sm font-semibold flex-shrink-0`}>{label}</span>
-                      <input type="text" value={choice.text || ""} onChange={(e) => handleChoiceChange(index, e.target.value)} placeholder={`ตัวเลือก ${label}`} className="flex-1 px-4 py-2 border border-gray-300 rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-brand-red" />
+                      <input type="text" value={choice.text || ""} onChange={(e) => handleChoiceChange(index, e.target.value)} placeholder={`ตัวเลือก ${label}`} className="flex-1 px-4 py-2 border border-border rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-brand-red" />
                       <div className="flex gap-2 justify-end sm:justify-start">
-                        <label className="text-gray-400 hover:text-gray-600 cursor-pointer flex-shrink-0">
+                        <label className="text-muted-foreground hover:text-muted-foreground cursor-pointer flex-shrink-0">
                           <ImageIcon className="w-4 h-4" />
                           <input type="file" accept="image/*" onChange={(e) => e.target.files?.[0] && handleChoiceImageUpload(index, e.target.files[0])} className="hidden" />
                         </label>
-                        <label className="text-gray-400 hover:text-gray-600 cursor-pointer flex-shrink-0">
+                        <label className="text-muted-foreground hover:text-muted-foreground cursor-pointer flex-shrink-0">
                           <Mic className="w-4 h-4" />
                           <input type="file" accept="audio/*" onChange={(e) => e.target.files?.[0] && handleChoiceAudioUpload(index, e.target.files[0])} className="hidden" />
                         </label>
@@ -1384,7 +1384,7 @@ export default function QuizCreateForm() {
                           <button onClick={() => setSelectedImage(choice.image)} className="max-h-40 max-w-full rounded-lg object-contain self-start cursor-pointer hover:opacity-80 transition-opacity">
                             <img src={choice.image} alt={`Choice ${label} preview`} className="max-h-40 max-w-full rounded-lg object-contain" />
                           </button>
-                          <button onClick={() => deleteChoiceImage(index)} className="flex items-center gap-2 px-3 py-1 border border-gray-300 text-gray-700 hover:bg-gray-100 rounded-full text-xs font-medium transition-colors w-fit">
+                          <button onClick={() => deleteChoiceImage(index)} className="flex items-center gap-2 px-3 py-1 border border-border text-muted-foreground hover:bg-muted rounded-full text-xs font-medium transition-colors w-fit">
                             <Trash2 className="w-3 h-3" />
                             ลบ
                           </button>
@@ -1393,7 +1393,7 @@ export default function QuizCreateForm() {
                       {choice.audio && (
                         <div className="flex flex-col gap-2">
                           <audio src={choice.audio} controls className="max-w-xs rounded-lg h-8" />
-                          <button onClick={() => deleteChoiceAudio(index)} className="flex items-center gap-2 px-3 py-1 border border-gray-300 text-gray-700 hover:bg-gray-100 rounded-full text-xs font-medium transition-colors w-fit">
+                          <button onClick={() => deleteChoiceAudio(index)} className="flex items-center gap-2 px-3 py-1 border border-border text-muted-foreground hover:bg-muted rounded-full text-xs font-medium transition-colors w-fit">
                           <Trash2 className="w-3 h-3" />
                           ลบ
                         </button>
@@ -1415,7 +1415,7 @@ export default function QuizCreateForm() {
           <button onClick={saveQuiz} className="flex-1 bg-brand-red hover:bg-red-700 text-white px-6 py-3 rounded-full font-medium text-sm transition-colors">
             บันทึกแบบทดสอบ
           </button>
-          <button onClick={() => navigate("/")} className="px-6 py-3 border border-gray-300 rounded-full text-gray-700 hover:bg-gray-50 font-medium text-sm transition-colors">
+          <button onClick={() => navigate("/")} className="px-6 py-3 border border-border rounded-full text-muted-foreground hover:bg-muted font-medium text-sm transition-colors">
             ยกเลิก
           </button>
         </div>
@@ -1423,11 +1423,11 @@ export default function QuizCreateForm() {
 
       {selectedImage && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50" onClick={() => setSelectedImage(null)}>
-          <div className="bg-white rounded-2xl shadow-xl max-w-2xl w-full max-h-[90vh] overflow-auto flex flex-col" onClick={(e) => e.stopPropagation()}>
-            <div className="flex items-center justify-between p-4 border-b border-gray-200">
-              <h2 className="text-lg font-semibold text-gray-900">รูปภาพ</h2>
-              <button onClick={() => setSelectedImage(null)} className="p-1 hover:bg-gray-100 rounded-full transition-colors">
-                <X className="w-6 h-6 text-gray-600" />
+          <div className="bg-card rounded-2xl shadow-xl max-w-2xl w-full max-h-[90vh] overflow-auto flex flex-col" onClick={(e) => e.stopPropagation()}>
+            <div className="flex items-center justify-between p-4 border-b border-border">
+              <h2 className="text-lg font-semibold text-foreground">รูปภาพ</h2>
+              <button onClick={() => setSelectedImage(null)} className="p-1 hover:bg-muted rounded-full transition-colors">
+                <X className="w-6 h-6 text-muted-foreground" />
               </button>
             </div>
             <div className="flex-1 flex items-center justify-center p-6">

@@ -131,38 +131,38 @@ export default function CheckScore() {
       <div className="space-y-6">
         {/* Header */}
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">
+          <h1 className="text-3xl font-bold text-foreground">
             ตรวจสอบคะแนน
           </h1>
-          <p className="text-gray-600 mt-2">
+          <p className="text-muted-foreground mt-2">
             เลือกแบบทดสอบเพื่อตรวจสอบคะแนนของนักเรียน
           </p>
         </div>
 
         {/* Filters */}
-        <div className="bg-white border border-gray-200 rounded-xl p-3">
+        <div className="bg-card border border-border rounded-xl p-3">
           <button
             onClick={() => setShowFilters(!showFilters)}
-            className="w-full flex items-center justify-between text-sm font-medium text-gray-900 hover:text-brand-red transition-colors"
+            className="w-full flex items-center justify-between text-sm font-medium text-foreground hover:text-brand-red transition-colors"
           >
             <span>ตัวกรอง</span>
             <span className={`transform transition-transform ${showFilters ? 'rotate-180' : ''}`}>▼</span>
           </button>
           
           {showFilters && (
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-2 mt-3 pt-3 border-t border-gray-200">
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-2 mt-3 pt-3 border-t border-border">
               <div>
-                <label className="block text-xs font-medium text-gray-700 mb-1">ชื่อแบบทดสอบ</label>
+                <label className="block text-xs font-medium text-muted-foreground mb-1">ชื่อแบบทดสอบ</label>
                 <input
                   type="text"
                   value={searchTitle}
                   onChange={(e) => setSearchTitle(e.target.value)}
                   placeholder="ค้นหา..."
-                  className="w-full px-2 py-1 border border-gray-300 rounded text-xs focus:outline-none focus:ring-1 focus:ring-brand-red"
+                  className="w-full px-2 py-1 border border-border rounded text-xs focus:outline-none focus:ring-1 focus:ring-brand-red"
                 />
               </div>
               <div>
-                <label className="block text-xs font-medium text-gray-700 mb-1">สาขาวิชา</label>
+                <label className="block text-xs font-medium text-muted-foreground mb-1">สาขาวิชา</label>
                 <select
                   value={filterBranch}
                   onChange={(e) => {
@@ -171,7 +171,7 @@ export default function CheckScore() {
                     setFilterUnit("");
                     setFilterTopic("");
                   }}
-                  className="w-full px-2 py-1 border border-gray-300 rounded text-xs focus:outline-none focus:ring-1 focus:ring-brand-red"
+                  className="w-full px-2 py-1 border border-border rounded text-xs focus:outline-none focus:ring-1 focus:ring-brand-red"
                 >
                   <option value="">ทั้งหมด</option>
                   {getUniqueBranches().map(branch => (
@@ -180,7 +180,7 @@ export default function CheckScore() {
                 </select>
               </div>
               <div>
-                <label className="block text-xs font-medium text-gray-700 mb-1">วิชา</label>
+                <label className="block text-xs font-medium text-muted-foreground mb-1">วิชา</label>
                 <select
                   value={filterSubject}
                   onChange={(e) => {
@@ -189,7 +189,7 @@ export default function CheckScore() {
                     setFilterTopic("");
                   }}
                   disabled={!filterBranch}
-                  className="w-full px-2 py-1 border border-gray-300 rounded text-xs focus:outline-none focus:ring-1 focus:ring-brand-red disabled:bg-gray-100"
+                  className="w-full px-2 py-1 border border-border rounded text-xs focus:outline-none focus:ring-1 focus:ring-brand-red disabled:bg-muted"
                 >
                   <option value="">ทั้งหมด</option>
                   {getUniqueSubjects().map(subject => (
@@ -198,7 +198,7 @@ export default function CheckScore() {
                 </select>
               </div>
               <div>
-                <label className="block text-xs font-medium text-gray-700 mb-1">หน่วย</label>
+                <label className="block text-xs font-medium text-muted-foreground mb-1">หน่วย</label>
                 <select
                   value={filterUnit}
                   onChange={(e) => {
@@ -206,7 +206,7 @@ export default function CheckScore() {
                     setFilterTopic("");
                   }}
                   disabled={!filterSubject}
-                  className="w-full px-2 py-1 border border-gray-300 rounded text-xs focus:outline-none focus:ring-1 focus:ring-brand-red disabled:bg-gray-100"
+                  className="w-full px-2 py-1 border border-border rounded text-xs focus:outline-none focus:ring-1 focus:ring-brand-red disabled:bg-muted"
                 >
                   <option value="">ทั้งหมด</option>
                   {getUniqueUnits().map(unit => (
@@ -215,12 +215,12 @@ export default function CheckScore() {
                 </select>
               </div>
               <div>
-                <label className="block text-xs font-medium text-gray-700 mb-1">เรื่อง</label>
+                <label className="block text-xs font-medium text-muted-foreground mb-1">เรื่อง</label>
                 <select
                   value={filterTopic}
                   onChange={(e) => setFilterTopic(e.target.value)}
                   disabled={!filterUnit}
-                  className="w-full px-2 py-1 border border-gray-300 rounded text-xs focus:outline-none focus:ring-1 focus:ring-brand-red disabled:bg-gray-100"
+                  className="w-full px-2 py-1 border border-border rounded text-xs focus:outline-none focus:ring-1 focus:ring-brand-red disabled:bg-muted"
                 >
                   <option value="">ทั้งหมด</option>
                   {getUniqueTopics().map(topic => (
@@ -229,12 +229,12 @@ export default function CheckScore() {
                 </select>
               </div>
               <div>
-                <label className="block text-xs font-medium text-gray-700 mb-1">วันที่สร้าง</label>
+                <label className="block text-xs font-medium text-muted-foreground mb-1">วันที่สร้าง</label>
                 <input
                   type="date"
                   value={filterDate}
                   onChange={(e) => setFilterDate(e.target.value)}
-                  className="w-full px-2 py-1 border border-gray-300 rounded text-xs focus:outline-none focus:ring-1 focus:ring-brand-red"
+                  className="w-full px-2 py-1 border border-border rounded text-xs focus:outline-none focus:ring-1 focus:ring-brand-red"
                 />
               </div>
             </div>
@@ -243,19 +243,19 @@ export default function CheckScore() {
 
         {/* Quiz List */}
         <div className="space-y-3">
-          <h2 className="text-lg font-semibold text-gray-900">
+          <h2 className="text-lg font-semibold text-foreground">
             แบบทดสอบของคุณ ({filteredQuizzes.length})
           </h2>
 
           {filteredQuizzes.length === 0 ? (
-            <div className="bg-white border border-dashed border-gray-300 rounded-2xl p-12 text-center">
-              <div className="inline-flex items-center justify-center w-12 h-12 bg-gray-100 rounded-full mb-4">
-                <ImageIcon className="w-6 h-6 text-gray-400" />
+            <div className="bg-card border border-dashed border-border rounded-2xl p-12 text-center">
+              <div className="inline-flex items-center justify-center w-12 h-12 bg-muted rounded-full mb-4">
+                <ImageIcon className="w-6 h-6 text-muted-foreground" />
               </div>
-              <p className="text-gray-600 font-medium">
+              <p className="text-muted-foreground font-medium">
                 ยังไม่มีแบบทดสอบ
               </p>
-              <p className="text-gray-500 text-sm mt-1">
+              <p className="text-muted-foreground text-sm mt-1">
                 ไปที่หน้า "สร้าง/แก้ไขแบบทดสอบ" เพื่อสร้างแบบทดสอบใหม่
               </p>
             </div>
@@ -263,14 +263,14 @@ export default function CheckScore() {
             filteredQuizzes.map((quiz) => (
               <div
                 key={quiz.id}
-                className="bg-white border border-gray-200 rounded-2xl p-4 hover:shadow-md transition-shadow"
+                className="bg-card border border-border rounded-2xl p-4 hover:shadow-md transition-shadow"
               >
                 <div className="flex items-center justify-between">
                   <div className="flex-1">
-                    <h3 className="font-semibold text-gray-900">
+                    <h3 className="font-semibold text-foreground">
                       {quiz.title}
                     </h3>
-                    <p className="text-sm text-gray-500 mt-1">
+                    <p className="text-sm text-muted-foreground mt-1">
                       {quiz.maxQuestions} คำถาม • {formatDate(quiz.updatedAt)}
                     </p>
                   </div>

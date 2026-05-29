@@ -489,7 +489,7 @@ function MockQrCode() {
   ];
 
   return (
-    <div className="grid aspect-square w-36 grid-cols-7 gap-1 rounded-2xl border bg-white p-3 shadow-inner">
+    <div className="grid aspect-square w-36 grid-cols-7 gap-1 rounded-2xl border bg-card p-3 shadow-inner">
       {qrPattern.map((row, rowIndex) =>
         row.map((cell, colIndex) => (
           <span

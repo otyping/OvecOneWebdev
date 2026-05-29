@@ -25,9 +25,9 @@ export default function PlaceholderPage({
         </button>
 
         <div className="max-w-md">
-          <h1 className="text-3xl font-bold text-gray-900 mb-3">{title}</h1>
-          <p className="text-gray-600 mb-6">{description}</p>
-          <p className="text-sm text-gray-500">
+          <h1 className="text-3xl font-bold text-foreground mb-3">{title}</h1>
+          <p className="text-muted-foreground mb-6">{description}</p>
+          <p className="text-sm text-muted-foreground">
             หน้านี้พร้อมสำหรับการพัฒนา บอกให้เราทราบว่าคุณต้องการเพิ่มฟีเจอร์อะไรที่นี่!
           </p>
         </div>

@@ -8,6 +8,7 @@ import {
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { saveLessonToStorage, createLessonId, formatDate, type SavedLesson } from "@/utils/lessonStorage";
+import { cn } from "@/lib/utils";
 
 const draftStorageKey = "lessonPlanGenerationDraft";
 
@@ -106,45 +107,86 @@ const featuredLessonSelection = {
 };
 
 
-type LoadingStep = {
-  label: string;
-  completed: boolean;
-};
+const GENERATION_STEPS = [
+  "สร้างแผนการจัดการเรียนรู้",
+  "จัดทำวีดีโอประกอบ",
+  "จัดทำสไลด์นำเสนอ",
+  "จัดทำแบบทดสอบ",
+  "รวบรวมและจัดรูปแบบไฟล์",
+];
 
-function LoadingScreen() {
-  const steps: LoadingStep[] = [
-    { label: "สร้างแผนการจัดการเรียนรู้", completed: true },
-    { label: "จัดทำวีดีโอ", completed: true },
-    { label: "จัดทำสไลด์", completed: true },
-    { label: "จัดทำแบบทดสอบ", completed: true },
-  ];
+/**
+ * หน้าจอแสดงกระบวนการ AI ทำสื่อทีละขั้น:
+ * ขั้นที่กำลังทำ = ไอคอนหมุน, ขั้นที่เสร็จ = ติ๊กถูก, ขั้นที่รอ = วงกลมจาง
+ * เมื่อครบทุกขั้น เรียก onComplete() เพื่อไปหน้าผลลัพธ์
+ */
+function LoadingScreen({ onComplete }: { onComplete: () => void }) {
+  const [done, setDone] = useState(0);
+  const allDone = done >= GENERATION_STEPS.length;
+
+  useEffect(() => {
+    if (allDone) {
+      const timer = window.setTimeout(onComplete, 800);
+      return () => window.clearTimeout(timer);
+    }
+    // แต่ละขั้นใช้เวลาราว 1.5–2.2 วินาที (หมุนอยู่) ก่อนติ๊กถูกแล้วไปขั้นถัดไป
+    const timer = window.setTimeout(
+      () => setDone((current) => current + 1),
+      1500 + Math.random() * 700,
+    );
+    return () => window.clearTimeout(timer);
+  }, [done, allDone, onComplete]);
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-background/95 backdrop-blur-sm">
-      <div className="animate-in fade-in duration-500 flex flex-col items-center gap-8 max-w-md">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-background/95 p-6 backdrop-blur-sm">
+      <div className="flex w-full max-w-md flex-col items-center gap-8 animate-in fade-in duration-500">
         <div className="flex flex-col items-center gap-4">
-          <div className="relative">
-            <Loader className="h-16 w-16 text-primary animate-spin" />
-          </div>
-          <div className="text-center space-y-2">
-            <h2 className="text-2xl font-bold text-foreground">กำลังเตรียมสื่อการสอน...</h2>
-            <p className="text-sm text-muted-foreground">AI กำลังจัดรูปแบบและสร้างไฟล์สำหรับคุณ</p>
+          {allDone ? (
+            <CheckCircle2 className="h-16 w-16 text-green-500" />
+          ) : (
+            <Loader className="h-16 w-16 animate-spin text-primary" />
+          )}
+          <div className="space-y-2 text-center">
+            <h2 className="text-2xl font-bold text-foreground">
+              {allDone ? "เตรียมสื่อการสอนเสร็จแล้ว!" : "กำลังเตรียมสื่อการสอน..."}
+            </h2>
+            <p className="text-sm text-muted-foreground">
+              {allDone ? "กำลังพาไปยังหน้าผลลัพธ์..." : "AI กำลังจัดทำสื่อทีละขั้น"}
+            </p>
           </div>
         </div>
 
         <div className="w-full space-y-3">
-          {steps.map((step, index) => (
-            <div
-              key={step.label}
-              className="animate-in fade-in slide-in-from-left-4 duration-500"
-              style={{ animationDelay: `${index * 100}ms`, animationFillMode: "both" }}
-            >
-              <div className="flex items-center gap-3 rounded-lg bg-muted/30 p-3 border border-border/50">
-                <CheckCircle2 className="h-5 w-5 flex-shrink-0 text-green-500" />
-                <span className="text-sm font-medium text-foreground">{step.label}</span>
+          {GENERATION_STEPS.map((label, index) => {
+            const status = index < done ? "done" : index === done ? "active" : "pending";
+            return (
+              <div
+                key={label}
+                className={cn(
+                  "flex items-center gap-3 rounded-xl border p-3 transition-colors duration-300",
+                  status === "done" && "border-green-500/30 bg-green-500/5",
+                  status === "active" && "border-primary/40 bg-primary/5",
+                  status === "pending" && "border-border/50 bg-muted/20",
+                )}
+              >
+                {status === "done" ? (
+                  <CheckCircle2 className="h-5 w-5 flex-shrink-0 text-green-500" />
+                ) : status === "active" ? (
+                  <Loader className="h-5 w-5 flex-shrink-0 animate-spin text-primary" />
+                ) : (
+                  <span className="h-5 w-5 flex-shrink-0 rounded-full border-2 border-muted-foreground/30" />
+                )}
+                <span
+                  className={cn(
+                    "text-sm font-medium",
+                    status === "pending" ? "text-muted-foreground" : "text-foreground",
+                  )}
+                >
+                  {label}
+                </span>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </div>
@@ -246,20 +288,13 @@ export default function LessonPlanGeneration() {
   const handleConfirmStyle = () => {
     if (phase !== "selectStyle") return;
 
-    // Save lesson content to sessionStorage
+    // บันทึกเนื้อหาลง sessionStorage แล้วเปิดหน้าจอแสดงกระบวนการทีละขั้น
+    // (การไปหน้าผลลัพธ์จัดการโดย LoadingScreen เมื่อทุกขั้นเสร็จ)
     const lessonContent = buildContentText(selectedStyle, draft);
     const updatedDraft = { ...draft, lessonContent };
     window.sessionStorage.setItem(draftStorageKey, JSON.stringify(updatedDraft));
 
-    // Show loading screen for 8-10 seconds
     setIsLoadingScreen(true);
-    const loadingDuration = Math.random() * 2000 + 8000;
-    const loadingTimer = window.setTimeout(() => {
-      setIsLoadingScreen(false);
-      navigate("/dashboard/create-lesson-plan/generation/files");
-    }, loadingDuration);
-
-    return () => window.clearTimeout(loadingTimer);
   };
 
   const handleSaveLesson = (goToDetail?: boolean) => {
@@ -293,7 +328,11 @@ export default function LessonPlanGeneration() {
 
 
   if (isLoadingScreen) {
-    return <LoadingScreen />;
+    return (
+      <LoadingScreen
+        onComplete={() => navigate("/dashboard/create-lesson-plan/generation/files")}
+      />
+    );
   }
 
 
@@ -386,20 +425,10 @@ export default function LessonPlanGeneration() {
             {phase === "complete" && (
               <Button
                 onClick={() => {
-                  // Save lesson content to sessionStorage
                   const lessonContent = buildContentText(selectedStyle, draft);
                   const updatedDraft = { ...draft, lessonContent };
                   window.sessionStorage.setItem(draftStorageKey, JSON.stringify(updatedDraft));
-
-                  // Show loading screen for 8-10 seconds
                   setIsLoadingScreen(true);
-                  const loadingDuration = Math.random() * 2000 + 8000;
-                  const loadingTimer = window.setTimeout(() => {
-                    setIsLoadingScreen(false);
-                    navigate("/dashboard/create-lesson-plan/generation/files");
-                  }, loadingDuration);
-
-                  return () => window.clearTimeout(loadingTimer);
                 }}
                 className="mt-4 w-full rounded-full bg-primary text-white hover:bg-primary/90"
               >

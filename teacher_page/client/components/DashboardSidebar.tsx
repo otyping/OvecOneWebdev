@@ -11,23 +11,27 @@ import {
   X,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { BRAND } from "@/config/brand";
+import { useT } from "@/i18n/useT";
+import type { TranslationKey } from "@/i18n/translations";
 
 interface DashboardSidebarProps {
   onLogout: () => void;
 }
 
-const dashboardItems = [
-  { label: "Dashboard ครู", path: "/dashboard" },
-  { label: "Dashboard ผู้อำนวยการวิทยาลัย", path: "/dashboard/school-director" },
-  { label: "Dashboard ส่วนกลาง", path: "/dashboard/area-director" },
+const dashboardItems: { labelKey: TranslationKey; path: string }[] = [
+  { labelKey: "nav.dashboard.teacher", path: "/dashboard" },
+  { labelKey: "nav.dashboard.schoolDirector", path: "/dashboard/school-director" },
+  { labelKey: "nav.dashboard.areaDirector", path: "/dashboard/area-director" },
 ];
 
-const mainMenuItems = [
-  { label: "ชุดกิจกรรม", icon: BookOpen, path: "/dashboard/lesson-plan" },
+const mainMenuItems: { labelKey: TranslationKey; icon: typeof BookOpen; path: string }[] = [
+  { labelKey: "nav.lessonPlan", icon: BookOpen, path: "/dashboard/lesson-plan" },
 ];
 
 export function DashboardSidebar({ onLogout }: DashboardSidebarProps) {
   const location = useLocation();
+  const t = useT();
   const [isOpen, setIsOpen] = useState(false);
   const [isDashboardOpen, setIsDashboardOpen] = useState(true);
 
@@ -67,14 +71,14 @@ export function DashboardSidebar({ onLogout }: DashboardSidebarProps) {
 
       <aside
         className={cn(
-          "fixed lg:static inset-y-0 left-0 w-64 bg-[#31363F] text-white z-40 flex flex-col transition-transform lg:translate-x-0 shadow-2xl shadow-primary/20",
+          "fixed inset-y-0 left-0 z-40 w-64 bg-[#31363F] text-white flex flex-col transition-transform shadow-2xl shadow-primary/20 lg:sticky lg:top-0 lg:h-screen lg:translate-x-0",
           isOpen ? "translate-x-0" : "-translate-x-full",
         )}
       >
         <div className="p-6 border-b border-white/10 bg-white/10 backdrop-blur-sm">
           <Link to="/dashboard" className="flex items-center gap-2">
-            <img src="https://cdn.builder.io/api/v1/image/assets%2Fa061ccedc21643e89c15d64ceb68a9d5%2Fd6cf903c88954016a06c1dbcdc8ff7c4" alt="OVEC Logo" className="w-8 h-8 rounded-full" />
-            <span className="font-bold text-lg text-white">OVEC One</span>
+            <img src={BRAND.logoUrl} alt={`${BRAND.appName} Logo`} className="w-8 h-8 rounded-full" />
+            <span className="font-bold text-lg text-white">{BRAND.appName}</span>
           </Link>
         </div>
 
@@ -89,12 +93,12 @@ export function DashboardSidebar({ onLogout }: DashboardSidebarProps) {
                 to={item.path}
                 onClick={() => setIsOpen(false)}
                 className={cn(
-                  "block w-full flex items-center gap-3 px-4 py-3 rounded-lg font-medium transition-colors text-left",
+                  "block w-full flex items-center gap-3 px-4 py-3 rounded-lg font-medium transition-all duration-200 ease-smooth hover:translate-x-0.5 text-left motion-reduce:transform-none",
                   active ? "bg-[#4A5267] text-white shadow-lg shadow-primary/20" : "text-white hover:bg-[#4A5267]",
                 )}
               >
                 <Icon className="w-5 h-5 flex-shrink-0" />
-                <span>{item.label}</span>
+                <span>{t(item.labelKey)}</span>
               </Link>
             );
           })}
@@ -103,7 +107,7 @@ export function DashboardSidebar({ onLogout }: DashboardSidebarProps) {
             <CollapsibleTrigger asChild>
               <button
                 className={cn(
-                  "w-full flex items-center justify-between gap-3 px-4 py-3 rounded-lg font-medium transition-colors text-left",
+                  "w-full flex items-center justify-between gap-3 px-4 py-3 rounded-lg font-medium transition-all duration-200 ease-smooth hover:translate-x-0.5 text-left motion-reduce:transform-none",
                   isDashboardActive
                     ? "bg-[#4A5267] text-white shadow-lg shadow-primary/20"
                     : "text-white hover:bg-[#4A5267]",
@@ -111,7 +115,7 @@ export function DashboardSidebar({ onLogout }: DashboardSidebarProps) {
               >
                 <span className="flex items-center gap-3">
                   <LayoutDashboard className="w-5 h-5 flex-shrink-0" />
-                  <span>Dashboard</span>
+                  <span>{t("nav.dashboard")}</span>
                 </span>
                 <ChevronDown
                   className={cn("w-4 h-4 transition-transform", isDashboardOpen && "rotate-180")}
@@ -128,13 +132,13 @@ export function DashboardSidebar({ onLogout }: DashboardSidebarProps) {
                     to={item.path}
                     onClick={() => setIsOpen(false)}
                     className={cn(
-                      "block rounded-lg px-4 py-2.5 text-sm font-medium transition-colors",
+                      "block rounded-lg px-4 py-2.5 text-sm font-medium transition-all duration-200 ease-smooth hover:translate-x-0.5 motion-reduce:transform-none",
                       active
                         ? "bg-[#4A5267] text-white shadow-sm"
                         : "text-white/90 hover:bg-[#4A5267] hover:text-white",
                     )}
                   >
-                    {item.label}
+                    {t(item.labelKey)}
                   </Link>
                 );
               })}
@@ -148,7 +152,7 @@ export function DashboardSidebar({ onLogout }: DashboardSidebarProps) {
             onClick={onLogout}
             className="w-full rounded-full border border-white text-white hover:bg-white/10 hover:text-white"
           >
-            ออกจากระบบ
+            {t("action.logout")}
           </Button>
         </div>
       </aside>

@@ -123,7 +123,7 @@ export default function QuizTaker() {
     return (
       <Layout>
         <div className="flex items-center justify-center min-h-[60vh]">
-          <p className="text-gray-500">กำลังโหลด...</p>
+          <p className="text-muted-foreground">กำลังโหลด...</p>
         </div>
       </Layout>
     );
@@ -207,14 +207,14 @@ export default function QuizTaker() {
     <Layout>
       <div className="max-w-4xl mx-auto space-y-6">
         {/* Header */}
-        <div className="bg-white border border-gray-200 rounded-2xl p-6 space-y-4">
+        <div className="bg-card border border-border rounded-2xl p-6 space-y-4">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-2xl font-bold text-gray-900">{quiz.title}</h1>
-              <p className="text-gray-600 mt-1">คำถาม {currentQuestion}/{totalQuestions}</p>
+              <h1 className="text-2xl font-bold text-foreground">{quiz.title}</h1>
+              <p className="text-muted-foreground mt-1">คำถาม {currentQuestion}/{totalQuestions}</p>
             </div>
-            <div className={`text-right ${isTimeUp ? "text-red-600" : timeRemaining < 300 ? "text-orange-600" : "text-gray-900"}`}>
-              <p className="text-sm text-gray-600">เวลาคงเหลือ</p>
+            <div className={`text-right ${isTimeUp ? "text-red-600" : timeRemaining < 300 ? "text-orange-600" : "text-foreground"}`}>
+              <p className="text-sm text-muted-foreground">เวลาคงเหลือ</p>
               <p className="text-3xl font-bold font-mono">{formatTime(timeRemaining)}</p>
             </div>
           </div>
@@ -224,7 +224,7 @@ export default function QuizTaker() {
             <button
               onClick={() => setCurrentQuestion(Math.max(1, currentQuestion - 1))}
               disabled={currentQuestion === 1}
-              className="flex items-center gap-2 px-4 py-2 border border-gray-300 rounded-full text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+              className="flex items-center gap-2 px-4 py-2 border border-border rounded-full text-muted-foreground hover:bg-muted disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
             >
               <ChevronLeft className="w-4 h-4" />
               ก่อนหน้า
@@ -240,7 +240,7 @@ export default function QuizTaker() {
                       ? "bg-brand-red text-white"
                       : answers[q.num] !== undefined
                       ? "bg-green-100 text-green-700"
-                      : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+                      : "bg-muted text-muted-foreground hover:bg-muted"
                   }`}
                 >
                   {q.num}
@@ -251,7 +251,7 @@ export default function QuizTaker() {
             <button
               onClick={() => setCurrentQuestion(Math.min(totalQuestions, currentQuestion + 1))}
               disabled={currentQuestion === totalQuestions}
-              className="flex items-center gap-2 px-4 py-2 border border-gray-300 rounded-full text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+              className="flex items-center gap-2 px-4 py-2 border border-border rounded-full text-muted-foreground hover:bg-muted disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
             >
               ถัดไป
               <ChevronRight className="w-4 h-4" />
@@ -261,11 +261,11 @@ export default function QuizTaker() {
 
         {/* Question */}
         {currentQ && (
-          <div className="bg-white border border-gray-200 rounded-2xl p-6 space-y-6">
+          <div className="bg-card border border-border rounded-2xl p-6 space-y-6">
             {/* Question Text */}
             <div>
-              <h2 className="text-lg font-semibold text-gray-900">คำถาม</h2>
-              <p className="text-gray-700 mt-3">{currentQ.text}</p>
+              <h2 className="text-lg font-semibold text-foreground">คำถาม</h2>
+              <p className="text-muted-foreground mt-3">{currentQ.text}</p>
             </div>
 
             {/* Question Image */}
@@ -290,7 +290,7 @@ export default function QuizTaker() {
 
             {/* Choices */}
             <div className="space-y-3">
-              <p className="text-sm font-medium text-gray-900">ตัวเลือกคำตอบ</p>
+              <p className="text-sm font-medium text-foreground">ตัวเลือกคำตอบ</p>
               {currentQ.choices.map((choice: any, index: number) => {
                 const label = String.fromCharCode(65 + index);
                 const isSelected = answers[currentQuestion] === index;
@@ -302,19 +302,19 @@ export default function QuizTaker() {
                     className={`w-full text-left p-4 border rounded-lg transition-all ${
                       isSelected
                         ? "border-brand-red bg-red-50"
-                        : "border-gray-300 hover:border-gray-400"
+                        : "border-border hover:border-foreground/40"
                     }`}
                   >
                     <div className="flex items-start gap-3">
                       <div
-                        className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center font-semibold text-white text-sm ${
-                          isSelected ? "bg-brand-red" : "bg-gray-400"
+                        className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center font-semibold text-sm ${
+                          isSelected ? "bg-brand-red text-white" : "bg-muted text-muted-foreground"
                         }`}
                       >
                         {label}
                       </div>
                       <div className="flex-1">
-                        <p className="text-gray-900">{choice.text}</p>
+                        <p className="text-foreground">{choice.text}</p>
                         {choice.imageId && (
                           <img
                             src={loadMediaFile(quiz.id, choice.imageId)}
@@ -337,11 +337,11 @@ export default function QuizTaker() {
         )}
 
         {/* Bottom Actions */}
-        <div className="bg-white border border-gray-200 rounded-2xl p-6">
+        <div className="bg-card border border-border rounded-2xl p-6">
           <div className="flex gap-3">
             <button
               onClick={() => navigate("/quiz/student")}
-              className="px-6 py-3 border border-gray-300 rounded-full text-gray-700 hover:bg-gray-50 font-medium transition-colors"
+              className="px-6 py-3 border border-border rounded-full text-muted-foreground hover:bg-muted font-medium transition-colors"
             >
               ออก
             </button>

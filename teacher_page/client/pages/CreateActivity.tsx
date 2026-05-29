@@ -256,7 +256,7 @@ export default function SongPage() {
                   </Button>
                 </div>
 
-                <div className="rounded-2xl border border-border bg-gradient-to-br from-primary/90 to-cyan-600 text-white p-5">
+                <div className="rounded-2xl border border-border bg-gradient-to-br from-primary/90 to-cyan-600 dark:from-primary dark:to-cyan-500 text-white p-5">
                   <div className="flex items-center justify-between text-sm text-white/80 mb-4">
                     <span>พรีวิวเพลง</span>
                     <span>พร้อมร้องตาม</span>

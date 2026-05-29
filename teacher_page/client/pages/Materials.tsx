@@ -278,7 +278,7 @@ export default function VideoPage() {
                   </Button>
                 </div>
 
-                <div className="rounded-2xl border border-border bg-gradient-to-br from-slate-900 to-slate-700 text-white p-5 aspect-video flex flex-col justify-between">
+                <div className="rounded-2xl border border-border bg-gradient-to-br from-slate-900 to-slate-700 dark:from-slate-800 dark:to-slate-600 text-white p-5 aspect-video flex flex-col justify-between">
                   <div className="flex items-center justify-between text-sm text-white/80">
                     <span>พรีวิววีดีโอ</span>
                     <span>{style || "ยังไม่เลือกสไตล์"}</span>
