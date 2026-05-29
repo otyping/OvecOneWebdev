@@ -1,0 +1,151 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Kanit:wght@400;500;600;700&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  /**
+   * Tailwind CSS theme
+   * tailwind.config.ts expects the following color variables to be expressed as HSL values.
+   * A different format will require also updating the theme in tailwind.config.ts.
+  */
+  :root {
+    --background: 220 25% 98%;
+    --foreground: 225 38% 16%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 225 38% 16%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 225 38% 16%;
+
+    --primary: 220 13% 48%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 0 84% 60%;
+    --secondary-foreground: 0 0% 100%;
+
+    --muted: 220 20% 95%;
+    --muted-foreground: 220 16% 38%;
+
+    --accent: 0 84% 60%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 219 23% 84%;
+    --input: 219 23% 84%;
+    --ring: 0 84% 60%;
+
+    --radius: 0.75rem;
+
+    --sidebar-background: 0 0% 98%;
+
+    --sidebar-foreground: 240 5.3% 26.1%;
+
+    --sidebar-primary: 220 13% 48%;
+
+    --sidebar-primary-foreground: 0 0% 98%;
+
+    --sidebar-accent: 0 84% 60%;
+
+    --sidebar-accent-foreground: 0 0% 98%;
+
+    --sidebar-border: 220 13% 91%;
+
+    --sidebar-ring: 0 84% 60%;
+  }
+
+  .dark {
+    --background: 225 35% 11%;
+    --foreground: 0 0% 96%;
+
+    --card: 225 32% 15%;
+    --card-foreground: 0 0% 96%;
+
+    --popover: 225 32% 15%;
+    --popover-foreground: 0 0% 96%;
+
+    --primary: 220 13% 55%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 0 84% 60%;
+    --secondary-foreground: 0 0% 100%;
+
+    --muted: 225 30% 27%;
+    --muted-foreground: 0 0% 78%;
+
+    --accent: 0 84% 60%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 225 24% 26%;
+    --input: 225 24% 26%;
+    --ring: 0 84% 60%;
+    --sidebar-background: 220 20% 12%;
+    --sidebar-foreground: 0 0% 90%;
+    --sidebar-primary: 220 13% 55%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 0 84% 60%;
+    --sidebar-accent-foreground: 0 0% 98%;
+    --sidebar-border: 220 20% 25%;
+    --sidebar-ring: 0 84% 60%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    background-image: linear-gradient(135deg, hsl(var(--background)) 0%, hsl(220 25% 95%) 45%, hsl(0 50% 95%) 100%);
+    background-attachment: fixed;
+    font-family: "Kanit", "Inter", sans-serif;
+  }
+
+  ::placeholder {
+    color: hsl(215 14% 55%);
+    opacity: 1;
+  }
+
+  :where(p, span, li, h1, h2, h3, h4, h5, h6, a, button, label, td, th) {
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+
+  pre,
+  code {
+    overflow-x: auto;
+    white-space: pre;
+  }
+}
+
+@keyframes dashboardFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes dashboardBarGrow {
+  from {
+    transform: translateX(-50%) scaleY(0);
+    opacity: 0.6;
+  }
+
+  to {
+    transform: translateX(-50%) scaleY(1);
+    opacity: 1;
+  }
+}

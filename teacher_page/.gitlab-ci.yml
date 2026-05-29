@@ -1,0 +1,144 @@
+stages:
+  - test
+  - build
+  - deploy
+
+variables:
+  IMAGE_TAG: $CI_REGISTRY_IMAGE:$CI_COMMIT_TAG
+  IMAGE_TAG_LATEST: $CI_REGISTRY_IMAGE:latest
+  IMAGE_TAG_DEMO: $CI_REGISTRY_IMAGE:$CI_COMMIT_TAG
+  IMAGE_TAG_DEMO_LATEST: $CI_REGISTRY_IMAGE:demo
+
+# ─── Test ──────────────────────────────────────────────────────────────────────
+# test:
+#   stage: test
+#   image: node:22-alpine
+#   before_script:
+#     - npm install -g pnpm
+#     - pnpm install --frozen-lockfile
+#   script:
+#     - pnpm typecheck
+#     - pnpm test
+#   cache:
+#     key:
+#       files:
+#         - pnpm-lock.yaml
+#     paths:
+#       - node_modules/
+#   rules:
+#     - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+#     - if: $CI_COMMIT_BRANCH == "prod"
+
+# ─── Build & Push Docker image (Production) ────────────────────────────────────
+build:prod:
+  stage: build
+  image: docker:27
+  services:
+    - docker:27-dind
+  variables:
+    DOCKER_TLS_CERTDIR: "/certs"
+  before_script:
+    - echo "$CI_REGISTRY_PASSWORD" | docker login -u $CI_REGISTRY_USER --password-stdin $CI_REGISTRY
+  script:
+    - docker build
+      --cache-from $IMAGE_TAG_LATEST
+      --tag $IMAGE_TAG
+      --tag $IMAGE_TAG_LATEST
+      .
+    - docker push $IMAGE_TAG
+    - docker push $IMAGE_TAG_LATEST
+  rules:
+    - if: $CI_COMMIT_TAG =~ /^v\d+\.\d+\.\d+$/
+
+# ─── Build & Push Docker image (Demo) ─────────────────────────────────────────
+build:demo:
+  stage: build
+  image: docker:27
+  services:
+    - docker:27-dind
+  variables:
+    DOCKER_TLS_CERTDIR: "/certs"
+  before_script:
+    - echo "$CI_REGISTRY_PASSWORD" | docker login -u $CI_REGISTRY_USER --password-stdin $CI_REGISTRY
+  script:
+    - docker build
+      --cache-from $IMAGE_TAG_DEMO_LATEST
+      --tag $IMAGE_TAG_DEMO
+      --tag $IMAGE_TAG_DEMO_LATEST
+      .
+    - docker push $IMAGE_TAG_DEMO
+    - docker push $IMAGE_TAG_DEMO_LATEST
+  rules:
+    - if: $CI_COMMIT_TAG =~ /^v\d+\.\d+\.\d+-ovec-demo$/
+
+# ─── Deploy via SSH (Production) ───────────────────────────────────────────────
+deploy:prod:
+  stage: deploy
+  image: ubuntu:24.04
+  before_script:
+    - apt-get update -qq && apt-get install -y openssh-client
+    - eval $(ssh-agent -s)
+    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
+    - mkdir -p ~/.ssh && chmod 700 ~/.ssh
+    - ssh-keyscan -H "$DEPLOY_HOST" >> ~/.ssh/known_hosts
+  script:
+    - ssh "$DEPLOY_USER@$DEPLOY_HOST" "mkdir -p /opt/edu-one-ai"
+    - |
+      printf 'IMAGE_TAG=%s\n' \
+        "$IMAGE_TAG" \
+      | ssh "$DEPLOY_USER@$DEPLOY_HOST" "cat > /opt/edu-one-ai/.env"
+    - |
+      ssh "$DEPLOY_USER@$DEPLOY_HOST" "
+        docker login -u \"$CI_REGISTRY_USER\" -p \"$CI_REGISTRY_PASSWORD\" \"$CI_REGISTRY\" && \
+        docker pull $IMAGE_TAG && \
+        docker stop edu-one-ai || true && \
+        docker rm edu-one-ai || true && \
+        docker run -d \
+          --name edu-one-ai \
+          --restart unless-stopped \
+          -p 4520:3000 \
+          --env-file /opt/edu-one-ai/.env \
+          $IMAGE_TAG && \
+        docker image prune -af --filter 'until=24h'
+      "
+  environment:
+    name: production
+    url: http://$DEPLOY_HOST
+  rules:
+    - if: $CI_COMMIT_TAG =~ /^v\d+\.\d+\.\d+$/
+
+# ─── Deploy via SSH (Demo) ─────────────────────────────────────────────────────
+deploy:demo:
+  stage: deploy
+  image: ubuntu:24.04
+  before_script:
+    - apt-get update -qq && apt-get install -y openssh-client
+    - eval $(ssh-agent -s)
+    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
+    - mkdir -p ~/.ssh && chmod 700 ~/.ssh
+    - ssh-keyscan -H "$DEPLOY_HOST" >> ~/.ssh/known_hosts
+  script:
+    - ssh "$DEPLOY_USER@$DEPLOY_HOST" "mkdir -p /opt/ovec-demo"
+    - |
+      printf 'IMAGE_TAG=%s\n' \
+        "$IMAGE_TAG_DEMO" \
+      | ssh "$DEPLOY_USER@$DEPLOY_HOST" "cat > /opt/ovec-demo/.env"
+    - |
+      ssh "$DEPLOY_USER@$DEPLOY_HOST" "
+        docker login -u \"$CI_REGISTRY_USER\" -p \"$CI_REGISTRY_PASSWORD\" \"$CI_REGISTRY\" && \
+        docker pull $IMAGE_TAG_DEMO && \
+        docker stop ovec-demo || true && \
+        docker rm ovec-demo || true && \
+        docker run -d \
+          --name ovec-demo \
+          --restart unless-stopped \
+          -p 4323:3000 \
+          --env-file /opt/ovec-demo/.env \
+          $IMAGE_TAG_DEMO && \
+        docker image prune -af --filter 'until=24h'
+      "
+  environment:
+    name: demo
+    url: http://$DEPLOY_HOST:4323
+  rules:
+    - if: $CI_COMMIT_TAG =~ /^v\d+\.\d+\.\d+-ovec-demo$/
