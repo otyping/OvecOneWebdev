@@ -21,6 +21,7 @@ import { Hero3DBackground } from "@/components/three/Hero3DBackground";
 import { cn } from "@/lib/utils";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import AuthLayout from "./pages/auth/AuthLayout";
 import Home from "./pages/Home";
 import Dashboard from "./pages/Dashboard";
 import LessonPlans from "./pages/LessonPlans";
@@ -63,6 +64,12 @@ const AnimatedRoutes = () => {
   const showHeader = location.pathname.startsWith("/dashboard");
   // พื้นหลัง 3D อินเทอร์แอกทีฟ เฉพาะหน้า Home hub
   const isHome = location.pathname === "/dashboard/home";
+  // กลุ่ม auth (/login + /register) ใช้ key เดียวกัน — เพื่อไม่ให้ <AuthLayout>
+  // (และพื้นหลัง) remount ตอนสลับสองหน้านี้; ภายใน AuthLayout มี
+  // AnimatePresence ของตัวเองที่ทำ crossfade ระหว่าง Login/Register
+  const isAuth =
+    location.pathname === "/login" || location.pathname === "/register";
+  const routeKey = isAuth ? "auth" : location.pathname;
   return (
     <div
       className={cn(
@@ -73,9 +80,13 @@ const AnimatedRoutes = () => {
       {showHeader && <AppHeader />}
       {isHome && <Hero3DBackground />}
       <AnimatePresence mode="wait">
-        <Routes location={location} key={location.pathname}>
-        <Route path="/login" element={<PageTransition><Login /></PageTransition>} />
-        <Route path="/register" element={<PageTransition><Register /></PageTransition>} />
+        <Routes location={location} key={routeKey}>
+        {/* /login + /register แชร์ <AuthLayout> ที่ render BG + toggle ครั้งเดียว
+            → BG ไม่กระพริบเมื่อสลับระหว่างสองหน้า (Login/Register จัดมอชั่นเอง) */}
+        <Route element={<AuthLayout />}>
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+        </Route>
 
         <Route path="/dashboard/home" element={<ProtectedRoute><Home /></ProtectedRoute>} />
         <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />

@@ -20,7 +20,7 @@ export const translations = {
   "nav.profile": { th: "โปรไฟล์", en: "Profile" },
   "nav.apps": { th: "แอป", en: "Apps" },
   "nav.openQuiz": { th: "OVEC Quiz", en: "OVEC Quiz" },
-  "nav.dashboard": { th: "Dashboard", en: "Dashboard" },
+  "nav.dashboard": { th: "สรุปรายงาน", en: "Dashboard" },
   "nav.dashboard.teacher": { th: "Dashboard ครู", en: "Teacher Dashboard" },
   "nav.dashboard.schoolDirector": {
     th: "Dashboard ผู้อำนวยการวิทยาลัย",
@@ -58,6 +58,9 @@ export const translations = {
   "action.logout": { th: "ออกจากระบบ", en: "Log out" },
   "action.view": { th: "ดูข้อมูล", en: "View" },
   "action.search": { th: "ค้นหา...", en: "Search..." },
+  "action.menu": { th: "เมนู", en: "Menu" },
+  "action.close": { th: "ปิด", en: "Close" },
+  "action.understood": { th: "เข้าใจแล้ว", en: "Understood" },
 
   // ── หน้าเข้าสู่ระบบ ──
   "brand.tagline": { th: "AI Buddy for Teachers.", en: "AI Buddy for Teachers." },
@@ -77,6 +80,77 @@ export const translations = {
   "login.submit": { th: "ลงชื่อเข้าใช้", en: "Sign in" },
   "login.noAccount": { th: "ยังไม่มีบัญชี?", en: "No account yet?" },
   "login.registerHere": { th: "ลงทะเบียนที่นี่", en: "Register here" },
+  "login.emailPlaceholder": { th: "your@email.com / รหัส", en: "your@email.com / ID" },
+  "login.forgot.title": { th: "ตั้งค่ารหัสผ่านใหม่", en: "Reset password" },
+  "login.forgot.desc": {
+    th: "ส่งคำแนะนำในการตั้งค่ารหัสผ่านใหม่แล้ว",
+    en: "Reset instructions have been sent",
+  },
+  "login.forgot.introBefore": {
+    th: "รหัสผ่านของคุณได้รับการตั้งค่าใหม่เป็นวันเกิดของคุณในรูปแบบ ",
+    en: "Your password has been reset to your birthday in ",
+  },
+  "login.forgot.introAfter": {
+    th: " (ตัวอย่างเช่น: 0525 สำหรับ 25 พฤษภาคม)",
+    en: " format (e.g., 0525 for May 25)",
+  },
+  "login.forgot.exampleLabel": { th: "ตัวอย่าง:", en: "Example:" },
+  "login.forgot.exampleValue": {
+    th: "วันเกิด: 25 พฤษภาคม → รหัสผ่าน: 0525",
+    en: "Birthday: May 25 → Password: 0525",
+  },
+  "login.forgot.outro": {
+    th: "คุณสามารถเปลี่ยนรหัสผ่านนี้หลังจากเข้าสู่ระบบ โปรดตรวจสอบอีเมลของคุณเพื่อดูรายละเอียดเพิ่มเติม",
+    en: "You can change this password after logging in. Please check your email for more details.",
+  },
+
+  // ── หน้าลงทะเบียน ──
+  "register.title": { th: "สร้างบัญชี", en: "Create account" },
+  "register.subtitle": {
+    th: "กรอกข้อมูลเพื่อเริ่มใช้งาน",
+    en: "Fill in your details to get started",
+  },
+  "register.brand.tagline": {
+    th: "เข้าร่วมเพื่อเริ่มสอนอย่างชาญฉลาด",
+    en: "Join to teach smarter today",
+  },
+  "register.brand.feature1": {
+    th: "สร้างแผนการสอนด้วย AI ภายในไม่กี่นาที",
+    en: "Build AI lesson plans in minutes",
+  },
+  "register.brand.feature2": {
+    th: "สื่อ วิดีโอ แบบทดสอบ พร้อมใช้",
+    en: "Ready-to-use media, videos & quizzes",
+  },
+  "register.brand.feature3": {
+    th: "ติดตามผลคะแนนนักเรียนเรียลไทม์",
+    en: "Track student scores in real time",
+  },
+  "register.fullName": { th: "ชื่อเต็ม", en: "Full name" },
+  "register.email": { th: "อีเมล", en: "Email" },
+  "register.personalId": { th: "รหัสประจำตัว / ชื่อผู้ใช้", en: "ID / Username" },
+  "register.password": { th: "รหัสผ่าน", en: "Password" },
+  "register.confirmPassword": { th: "ยืนยันรหัสผ่าน", en: "Confirm password" },
+  "register.grade.label": { th: "ชั้นปีที่สอน", en: "Grade levels you teach" },
+  "register.grade.placeholder": {
+    th: "เลือกชั้นปี (เลือกได้หลายชั้น)",
+    en: "Select grades (multi-select)",
+  },
+  "register.grade.search": { th: "ค้นหาชั้นปี...", en: "Search grades..." },
+  "register.grade.empty": { th: "ไม่พบชั้นปี", en: "No grades found" },
+  "register.class.label": { th: "ห้องที่สอน", en: "Classrooms" },
+  "register.subject.label": { th: "วิชาที่สอน", en: "Subjects" },
+  "register.submit": { th: "สร้างบัญชี", en: "Create account" },
+  "register.haveAccount": { th: "มีบัญชีอยู่แล้ว?", en: "Already have an account?" },
+  "register.signIn": { th: "ลงชื่อเข้าใช้", en: "Sign in" },
+  "register.error.passwordMismatch": {
+    th: "รหัสผ่านไม่ตรงกัน",
+    en: "Passwords do not match",
+  },
+  "register.error.passwordShort": {
+    th: "รหัสผ่านต้องมีอย่างน้อย 6 ตัวอักษร",
+    en: "Password must be at least 6 characters",
+  },
 
   // ── หน้าชุดกิจกรรมที่บันทึก ──
   "saved.title": { th: "ชุดกิจกรรมที่บันทึก", en: "Saved Activity Sets" },

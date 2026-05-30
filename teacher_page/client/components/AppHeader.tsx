@@ -10,6 +10,7 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { BRAND } from "@/config/brand";
+import { buildQuizAppUrl } from "@/lib/crossAppAuth";
 import { useT } from "@/i18n/useT";
 import type { TranslationKey } from "@/i18n/translations";
 import { LanguageToggle } from "./LanguageToggle";
@@ -37,23 +38,12 @@ type NavEntry = NavItem | { labelKey: TranslationKey; items: NavItem[] };
 const NAV: NavEntry[] = [
   { labelKey: "nav.home", to: "/dashboard/home" },
   { labelKey: "nav.lessonPlan", to: "/dashboard/lesson-plan" },
-  { labelKey: "nav.create", to: "/dashboard/create-lesson-plan" },
   {
     labelKey: "nav.dashboard",
     items: [
       { labelKey: "nav.dashboard.teacher", to: "/dashboard" },
       { labelKey: "nav.dashboard.schoolDirector", to: "/dashboard/school-director" },
       { labelKey: "nav.dashboard.areaDirector", to: "/dashboard/area-director" },
-    ],
-  },
-  {
-    labelKey: "nav.media",
-    items: [
-      { labelKey: "nav.video", to: "/dashboard/video" },
-      { labelKey: "nav.slides", to: "/dashboard/slides" },
-      { labelKey: "nav.quiz", to: "/dashboard/quiz" },
-      { labelKey: "nav.song", to: "/dashboard/song" },
-      { labelKey: "nav.game", to: "/dashboard/game" },
     ],
   },
 ];
@@ -148,8 +138,13 @@ export function AppHeader() {
 
         {/* Right cluster */}
         <div className="ml-auto flex items-center gap-2">
+          {/*
+           * POC dev-only handoff: แนบ token (email) + name + from=teacher ไปกับ URL
+           * เพื่อให้ quiz_page auto-login (ไม่ต้องล็อกอินซ้ำ)
+           * ⚠️ plaintext ใน query string — ห้ามใช้ production ดู client/lib/crossAppAuth.ts
+           */}
           <a
-            href={BRAND.quizAppUrl}
+            href={buildQuizAppUrl()}
             target="_blank"
             rel="noopener noreferrer"
             className={cn(linkBase, "hidden items-center gap-1.5 border sm:inline-flex", onRed)}
@@ -197,14 +192,14 @@ export function AppHeader() {
           <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
             <SheetTrigger asChild>
               <button
-                aria-label="เมนู"
+                aria-label={t("action.menu")}
                 className="grid h-9 w-9 shrink-0 place-items-center rounded-full border border-white/40 text-white lg:hidden"
               >
                 <Menu className="h-5 w-5" />
               </button>
             </SheetTrigger>
             <SheetContent side="right" className="w-72">
-              <SheetTitle className="sr-only">เมนู</SheetTitle>
+              <SheetTitle className="sr-only">{t("action.menu")}</SheetTitle>
               <nav className="mt-8 flex flex-col gap-1">
                 {flatItems.map((it) => (
                   <SheetClose asChild key={it.to}>
@@ -222,8 +217,9 @@ export function AppHeader() {
                   </SheetClose>
                 ))}
                 <SheetClose asChild>
+                  {/* POC dev-only handoff — ดู buildQuizAppUrl() */}
                   <a
-                    href={BRAND.quizAppUrl}
+                    href={buildQuizAppUrl()}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="mt-2 inline-flex items-center gap-1.5 rounded-lg border border-border px-3 py-2.5 text-sm font-medium text-foreground hover:bg-muted"

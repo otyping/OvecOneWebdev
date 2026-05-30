@@ -1,5 +1,6 @@
 import "./global.css";
 
+import { useEffect } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { createRoot } from "react-dom/client";
 import { Toaster as Sonner } from "@/components/ui/sonner";
@@ -13,6 +14,7 @@ import { ScrollProgress } from "@/components/motion/ScrollProgress";
 import { LanguageProvider } from "@/i18n/LanguageProvider";
 import { AppHeader } from "@/components/AppHeader";
 import { BRAND } from "@/config/brand";
+import { consumeAuthHandoff } from "@/lib/consumeAuthHandoff";
 import NotFound from "./pages/NotFound";
 import QuizCreate from "./pages/QuizCreate";
 import QuizCreateForm from "./pages/QuizCreateForm";
@@ -57,22 +59,34 @@ const AnimatedRoutes = () => {
   );
 };
 
-const App = () => (
-  <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
-    <LanguageProvider>
-      <QueryClientProvider client={queryClient}>
-        <TooltipProvider>
-          <Toaster />
-          <Sonner />
-          <ScrollProgress />
-          <BrowserRouter>
-            <AnimatedRoutes />
-          </BrowserRouter>
-        </TooltipProvider>
-      </QueryClientProvider>
-    </LanguageProvider>
-  </ThemeProvider>
-);
+const App = () => {
+  /*
+   * Cross-app auth handoff (POC dev-only)
+   * รับ ?token=email&from=teacher จาก teacher_page → ตั้ง localStorage แล้ว clean URL
+   * เรียก 1 ครั้งตอน mount เท่านั้น (ก่อน BrowserRouter parse path เสร็จก็ทันใช้)
+   * ⚠️ ไม่ secure — ดู client/lib/consumeAuthHandoff.ts
+   */
+  useEffect(() => {
+    consumeAuthHandoff();
+  }, []);
+
+  return (
+    <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
+      <LanguageProvider>
+        <QueryClientProvider client={queryClient}>
+          <TooltipProvider>
+            <Toaster />
+            <Sonner />
+            <ScrollProgress />
+            <BrowserRouter>
+              <AnimatedRoutes />
+            </BrowserRouter>
+          </TooltipProvider>
+        </QueryClientProvider>
+      </LanguageProvider>
+    </ThemeProvider>
+  );
+};
 
 declare global {
   interface Window {

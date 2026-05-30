@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { motion, useReducedMotion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -14,18 +15,22 @@ import { BookOpen, Sparkles } from "lucide-react";
 import { Stagger, StaggerItem } from "@/components/motion/Stagger";
 import { BRAND } from "@/config/brand";
 import { useT } from "@/i18n/useT";
-import { LanguageToggle } from "@/components/LanguageToggle";
-import { ThemeToggle } from "@/components/ThemeToggle";
+import { DURATION, EASE_OUT } from "@/lib/motion";
 
-/** ภาพ hero โทน AI/เทคโนโลยีทันสมัย (เปลี่ยน URL ได้ที่นี่จุดเดียว) */
-const HERO_IMAGE =
-  "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=1600&q=80";
-
-const onLight = "border-white/40 text-white hover:bg-white/15";
+/**
+ * variants สำหรับการ์ดล็อกอิน — fade + scale เนียนๆ
+ * BG + ปุ่ม toggle ถูก render ที่ <AuthLayout> ส่วนตัวการ์ดสลับด้วยมอชั่นนี้
+ */
+const cardVariants = {
+  hidden: { opacity: 0, scale: 0.98 },
+  show: { opacity: 1, scale: 1 },
+  exit: { opacity: 0, scale: 0.98 },
+};
 
 export default function Login() {
   const navigate = useNavigate();
   const t = useT();
+  const reduce = useReducedMotion();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
@@ -42,33 +47,16 @@ export default function Login() {
   };
 
   return (
-    <div className="relative flex min-h-screen items-center justify-center overflow-hidden px-4 py-10">
-      {/* ── พื้นหลัง: ภาพ AI + เคลือบโทนแดงตามธีม + กริด + แสงเรือง ── */}
-      <img
-        src={HERO_IMAGE}
-        alt=""
-        className="absolute inset-0 h-full w-full object-cover"
-      />
-      <div className="absolute inset-0 bg-gradient-to-br from-secondary/90 via-red-600/85 to-primary/90" />
-      <div
-        className="absolute inset-0 opacity-[0.10]"
-        style={{
-          backgroundImage:
-            "linear-gradient(to right, #fff 1px, transparent 1px), linear-gradient(to bottom, #fff 1px, transparent 1px)",
-          backgroundSize: "36px 36px",
-        }}
-      />
-      <div className="absolute -left-20 -top-24 h-80 w-80 rounded-full bg-white/20 blur-3xl" />
-      <div className="absolute -bottom-24 -right-16 h-80 w-80 rounded-full bg-cyan-300/20 blur-3xl" />
-
-      {/* ปุ่มภาษา/ธีม มุมขวาบน */}
-      <div className="absolute right-4 top-4 z-20 flex items-center gap-2">
-        <LanguageToggle className={onLight} />
-        <ThemeToggle className={onLight} />
-      </div>
-
-      {/* ── การ์ดล็อกอินกระจกฝ้า (กลางจอ) ── */}
-      <Stagger onView={false} className="relative z-10 w-full max-w-md">
+    <motion.div
+      className="w-full max-w-md"
+      variants={reduce ? undefined : cardVariants}
+      initial={reduce ? false : "hidden"}
+      animate={reduce ? undefined : "show"}
+      exit={reduce ? undefined : "exit"}
+      transition={{ duration: DURATION.base, ease: EASE_OUT }}
+    >
+      {/* ── การ์ดล็อกอินกระจกฝ้า (กลางจอ — center โดย AuthLayout) ── */}
+      <Stagger onView={false}>
         <StaggerItem className="mb-6 flex flex-col items-center text-center text-white">
           <span className="mb-3 grid h-14 w-14 place-items-center rounded-2xl bg-white/15 ring-1 ring-white/30 backdrop-blur">
             <BookOpen className="h-7 w-7" />
@@ -93,7 +81,7 @@ export default function Login() {
                 <Input
                   id="email"
                   type="text"
-                  placeholder="your@email.com / รหัส"
+                  placeholder={t("login.emailPlaceholder")}
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   className="h-11 rounded-xl bg-background/70"
@@ -164,25 +152,25 @@ export default function Login() {
       <Dialog open={showForgotModal} onOpenChange={setShowForgotModal}>
         <DialogContent className="rounded-2xl">
           <DialogHeader>
-            <DialogTitle>ตั้งค่ารหัสผ่านใหม่</DialogTitle>
-            <DialogDescription>
-              ส่งคำแนะนำในการตั้งค่ารหัสผ่านใหม่แล้ว
-            </DialogDescription>
+            <DialogTitle>{t("login.forgot.title")}</DialogTitle>
+            <DialogDescription>{t("login.forgot.desc")}</DialogDescription>
           </DialogHeader>
           <div className="py-4 space-y-4">
             <p className="text-foreground">
-              รหัสผ่านของคุณได้รับการตั้งค่าใหม่เป็นวันเกิดของคุณในรูปแบบ{" "}
-              <span className="font-semibold">MMDD</span> (ตัวอย่างเช่น: 0525
-              สำหรับ 25 พฤษภาคม)
+              {t("login.forgot.introBefore")}
+              <span className="font-semibold">MMDD</span>
+              {t("login.forgot.introAfter")}
             </p>
             <div className="bg-muted p-4 rounded-lg border border-border">
-              <p className="text-sm text-muted-foreground mb-2">ตัวอย่าง:</p>
+              <p className="text-sm text-muted-foreground mb-2">
+                {t("login.forgot.exampleLabel")}
+              </p>
               <p className="text-foreground font-mono">
-                วันเกิด: 25 พฤษภาคม → รหัสผ่าน: 0525
+                {t("login.forgot.exampleValue")}
               </p>
             </div>
             <p className="text-sm text-muted-foreground">
-              คุณสามารถเปลี่ยนรหัสผ่านนี้หลังจากเข้าสู่ระบบ โปรดตรวจสอบอีเมลของคุณเพื่อดูรายละเอียดเพิ่มเติม
+              {t("login.forgot.outro")}
             </p>
           </div>
           <div className="flex justify-end gap-3 mt-6">
@@ -191,14 +179,14 @@ export default function Login() {
               onClick={() => setShowForgotModal(false)}
               className="rounded-full"
             >
-              ปิด
+              {t("action.close")}
             </Button>
             <Button onClick={() => setShowForgotModal(false)} className="rounded-full">
-              เข้าใจแล้ว
+              {t("action.understood")}
             </Button>
           </div>
         </DialogContent>
       </Dialog>
-    </div>
+    </motion.div>
   );
 }
